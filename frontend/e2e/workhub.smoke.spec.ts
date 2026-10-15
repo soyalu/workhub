@@ -28,7 +28,7 @@ test('智能录入明确区分预览与正式保存', async ({ page }) => {
   await page.getByRole('textbox', { name: '工作记录原文' }).fill('开了一个会');
   await page.getByRole('button', { name: '预览输入（不保存）' }).click();
   await expect(page.getByText('未保存 / 未校验')).toBeVisible();
-  await expect(page.getByText('开了一个会', { exact: true })).toBeVisible();
+  await expect(page.locator('.capture-result').getByText('开了一个会', { exact: true })).toBeVisible();
 });
 
 test('手机屏幕可使用导航并看到真实输入入口', async ({ page }, testInfo) => {

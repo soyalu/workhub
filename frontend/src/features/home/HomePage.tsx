@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import {
   BookOpenText, CalendarDays, Compass, Feather, FolderKanban, Inbox,
   ListChecks, Sparkles, Trophy, Zap, ChartNoAxesCombined,
@@ -20,10 +21,24 @@ const points: { label: string; description: string; to: string; icon: LucideIcon
 
 
 export function HomePage() {
+  const [sceneLoaded, setSceneLoaded] = useState(false);
   return (
     <div className="home-layout">
-      <section className="map-stage map-stage-v2" aria-label="冒险地图导航">
-        <img src="/art/adventure-world.svg" className="adventure-scene" alt="浮岛城堡与云海的奇幻冒险地图插画" draggable={false} />
+      <section className={"map-stage map-stage-v2" + (sceneLoaded ? " is-raster-art" : "")} aria-label="冒险地图导航">
+        <img
+          src="/art/home-map.webp"
+          className="adventure-scene"
+          alt="浮岛城堡与云海的奇幻冒险美术场景"
+          draggable={false}
+          onLoad={() => setSceneLoaded(true)}
+          onError={(event) => {
+            // Graceful degradation until the separate binary artwork is installed.
+            if (!event.currentTarget.src.endsWith('/art/adventure-world.svg')) {
+              event.currentTarget.src = '/art/adventure-world.svg';
+            }
+            setSceneLoaded(false);
+          }}
+        />
         <div className="map-heading"><div className="eyebrow"><Sparkles size={15}/> YOUR ADVENTURE AWAITS</div><h1>今日 · 主线任务</h1><p>把每一次认真工作，都变成前进的旅程。</p></div>
         <div className="map-nodes">
           {points.map(({ label, description, to, icon: Icon, position }) => (
@@ -33,12 +48,19 @@ export function HomePage() {
             </Link>
           ))}
         </div>
-        <div className="map-caption">独立 SVG 场景层 · M1.3 美术迭代（模拟数据）</div>
+        <div className="map-caption">独立场景美术层 · 演示数据 · 生产级素材待最终验收</div>
       </section>
       <aside className="hero-summary hero-summary-v2">
         <div className="hero-identity">
           <span className="eyebrow">YOUR JOURNEY</span>
-          <div className="hero-avatar" aria-hidden="true"><Compass size={42}/></div>
+          <div className="hero-avatar hero-avatar-illustrated" aria-hidden="true">
+            <img
+              src="/art/traveler.webp"
+              alt=""
+              onError={(event) => { event.currentTarget.hidden = true; }}
+            />
+            <Compass className="avatar-fallback-icon" size={42} />
+          </div>
           <h2>你好，旅行者</h2>
           <p>工作是通往更大世界的修行。</p>
           <div className="hero-level"><strong>Lv. 1</strong><small>成长体系 · 待接入真实数据</small></div>

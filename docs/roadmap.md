@@ -10,7 +10,9 @@
 - [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
 - [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
-- [ ] Replace SVG illustration with final licensed scene artwork and add traveler character art after visual approval.
+- [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
+- [ ] Import raster asset binaries into the branch and validate rendered screenshots; until then the SVG remains a fallback.
+- [ ] Commission/produce clean high-resolution map art **without embedded interface text**, and a separate production portrait; temporary concept-art crops are not final.
 - [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 
 ## M2: Context-aware input and persistence

@@ -12,4 +12,4 @@ Install via: bash scripts/install-art.sh /path/to/workhub-artwork-m14.zip
 Then: npm run art:verify
 
 React owns all interactive labels, links and data. Do not use a complete dashboard screenshot as the artwork.
-Binary art is NOT in the repository until the three WebP files are actually committed.
+All three WebP binaries are now committed on feature/m1-ui-foundation. `npm run art:verify` checks SHA-256. The SVG map is kept as an explicit offline/failure fallback only.

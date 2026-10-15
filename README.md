@@ -118,3 +118,7 @@ workhub/
 ## License
 
 目前未授予开源许可证；公开访问不等同于允许他人使用和分发代码。
+
+### M1.3 场景美术资源
+
+`frontend/public/art/home-map.webp`、`traveler.webp`、`sidebar-night.webp` 已作为真实二进制文件纳入版本管理；来自已确定的三张奇幻美术图，而非网页截图。运行 `npm run art:verify` 校验哈希；React 文本、任务和地图入口仍可独立交互。角色边缘抠图仍有精修空间，最终视觉还原待截图验收。

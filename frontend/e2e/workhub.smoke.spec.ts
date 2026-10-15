@@ -6,6 +6,14 @@ test('首页的冒险场景及六个功能入口可访问', async ({ page }, tes
   await expect(page.getByRole('heading', { name: '今日 · 主线任务' })).toBeVisible();
   const map = page.getByRole('region', { name: '冒险地图导航' });
   await expect(map.locator('img.adventure-scene')).toBeVisible();
+  await expect(map).toHaveClass(/is-raster-art/);
+  const mapImage = map.locator('img.adventure-scene');
+  await expect(mapImage).toHaveAttribute('src', '/art/home-map.webp');
+  await expect.poll(() => mapImage.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(1200);
+  const traveler = page.locator('img.traveler-portrait');
+  await expect(traveler).toBeVisible();
+  await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
+  await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(6);
   await expect(map.getByRole('link', { name: /项目中心/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });

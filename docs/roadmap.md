@@ -11,8 +11,9 @@
 - [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
 - [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
-- [ ] Commit the three original raster art files to the branch and validate screenshots; until binary files are committed, SVG remains a fallback.
-- [ ] Commission/produce clean high-resolution map art **without embedded interface text**, and a separate production portrait; temporary concept-art crops are not final.
+- [x] Commit three WebP raster assets on the feature branch and validate their hashes in CI; SVG remains fallback only for loading failures.
+- [x] Use user-approved original fantasy art to prepare a clean map without embedded interface text, a transparent traveler cutout and a sidebar night illustration.
+- [ ] Polish traveler edge mask, refine map node placement and reach screenshot parity with the user-approved homepage.
 - [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 
 ## M2: Context-aware input and persistence

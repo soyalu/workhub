@@ -239,3 +239,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
  .map-stage-v2.is-raster-art .map-node-copy strong{font-size:11px;}
  .map-stage-v2.is-raster-art .map-node-icon{width:30px;height:30px;flex:0 0 30px;}
 }
+
+/* M1.3: production raster artwork from the selected three illustrations. */
+.sidebar-footer { min-height: 245px; padding-top: 153px; }
+.sidebar-scenery {
+  background:
+    linear-gradient(0deg, #0a1425 0%, #0a14255e 31%, #1021371f 69%, #112341 100%),
+    url('/art/sidebar-night.webp') center bottom / cover no-repeat;
+}
+.sidebar-scenery::after, .sidebar-moon, .sidebar-castle { display: none; }
+.sidebar-footer p { text-shadow: 0 2px 9px #051428; }
+.map-stage-v2.is-raster-art .adventure-scene { object-position: center center; }
+@media (max-width: 760px) {
+  .sidebar-footer { min-height: 210px; padding-top: 118px; }
+}

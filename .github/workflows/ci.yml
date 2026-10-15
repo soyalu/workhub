@@ -23,6 +23,8 @@ jobs:
       # Pinned npm lockfile is committed; npm ci ensures reproducible installs.
       - name: Install frontend dependencies
         run: npm ci --no-audit --no-fund
+      - name: Verify committed fantasy artwork
+        run: npm run art:verify
       - name: Typecheck
         run: npm run typecheck -w @workhub/frontend
       - name: Production build

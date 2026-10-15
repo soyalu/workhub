@@ -7,8 +7,10 @@
 - [x] Responsive sidebar and distinct page layouts for home, projects, calendar, journal, capture, inbox and growth.
 - [x] GitHub Actions checks for frontend and Go.
 - [ ] Produce and commit a reproducible frontend package-lock.json; then change CI to npm ci.
-- [ ] Run complete frontend dependencies/build validation, screenshot E2E and real-device responsive acceptance.
-- [ ] Rebuild approved layered homepage artwork as production assets and remove placeholder landscape.
+- [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
+- [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
+- [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
+- [ ] Replace SVG illustration with final licensed scene artwork and add traveler character art after visual approval.
 - [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 
 ## M2: Context-aware input and persistence

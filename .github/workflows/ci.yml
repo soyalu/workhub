@@ -25,6 +25,19 @@ jobs:
         run: npm run typecheck -w @workhub/frontend
       - name: Production build
         run: npm run build -w @workhub/frontend
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: Browser acceptance and screenshots
+        run: npm run test:e2e -w @workhub/frontend
+      - name: Upload screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workhub-m1-e2e
+          path: |
+            frontend/test-results/
+            frontend/playwright-report/
+          retention-days: 14
 
   backend:
     name: Go checks

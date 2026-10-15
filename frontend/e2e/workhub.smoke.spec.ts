@@ -102,4 +102,4 @@ test('地图美术缺失时明确提示且导航仍可用', async ({ page }) => 
   await expect(page.locator('img.adventure-scene')).toBeHidden();
   await page.getByRole('region', { name: '冒险地图导航' }).getByRole('link', { name: /项目中心/ }).click();
   await expect(page).toHaveURL('http://127.0.0.1:5173/projects');
-}
+});

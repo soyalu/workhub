@@ -21,24 +21,25 @@ const points: { label: string; description: string; to: string; icon: LucideIcon
 
 
 export function HomePage() {
-  const [sceneLoaded, setSceneLoaded] = useState(false);
+  const [sceneStatus, setSceneStatus] = useState<'loading' | 'ready' | 'missing'>('loading');
   return (
     <div className="home-layout">
-      <section className={"map-stage map-stage-v2" + (sceneLoaded ? " is-raster-art" : "")} aria-label="冒险地图导航">
+      <section className={"map-stage map-stage-v2 is-raster-art" + (sceneStatus === 'missing' ? ' art-missing' : '')} aria-label="冒险地图导航">
         <img
           src="/art/home-map.webp"
           className="adventure-scene"
           alt="浮岛城堡与云海的奇幻冒险美术场景"
           draggable={false}
-          onLoad={() => setSceneLoaded(true)}
-          onError={(event) => {
-            // Graceful degradation until the separate binary artwork is installed.
-            if (!event.currentTarget.src.endsWith('/art/adventure-world.svg')) {
-              event.currentTarget.src = '/art/adventure-world.svg';
-            }
-            setSceneLoaded(false);
-          }}
+          fetchPriority="high"
+          hidden={sceneStatus === 'missing'}
+          onLoad={() => setSceneStatus('ready')}
+          onError={() => setSceneStatus('missing')}
         />
+        {sceneStatus === 'missing' && (
+          <div className="map-art-error" role="alert">
+            地图美术资源加载失败，请检查 /art/home-map.webp。任务入口仍可使用。
+          </div>
+        )}
         <div className="map-heading"><div className="eyebrow"><Sparkles size={15}/> YOUR ADVENTURE AWAITS</div><h1>今日 · 主线任务</h1><p>把每一次认真工作，都变成前进的旅程。</p></div>
         <div className="map-nodes">
           {points.map(({ label, description, to, icon: Icon, position }) => (

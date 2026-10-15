@@ -9,10 +9,11 @@
 - [x] Commit a reproducible frontend package-lock.json and switch CI to npm ci.
 - [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
 - [x] Refine map node medallions, traveler cutout blending, parchment cards and mobile destination dock; verify via CI screenshots.
+- [x] Add Playwright layout checks for 1440, 1280, 1024, 900 and 390px; keep browser screenshots for review.
 - [ ] Complete side-by-side visual acceptance against the approved homepage and test on actual devices.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
 - [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
-- [x] Commit three WebP raster assets on the feature branch and validate their hashes in CI; SVG remains fallback only for loading failures.
+- [x] Commit three WebP raster assets and validate their hashes in CI; missing map assets now trigger a visible error (no silent SVG fallback).
 - [x] Use user-approved original fantasy art to prepare a clean map without embedded interface text, a transparent traveler cutout and a sidebar night illustration.
 - [ ] Polish traveler edge mask, refine map node placement and reach screenshot parity with the user-approved homepage.
 - [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.

@@ -30,7 +30,7 @@ WorkHub 是面向个人市场咨询与日常办公的工作台。以**项目机�
 ```bash
 git clone https://github.com/soyalu/workhub.git
 cd workhub
-npm install
+npm ci
 npm run dev
 ```
 
@@ -64,6 +64,14 @@ npm run dev:backend
 详见 [奇幻 UI 设计系统](docs/ui-design-system.md)。首页参考图是视觉方向，不是内页通用版式；页面必须使用真实组件，不能将整张设计图铺为背景并覆盖透明按钮。
 
 ## 校验
+
+包含 GitHub Actions 的 Playwright Chromium 页面跳转测试（截图作为运行产物保存）；本地如需运行浏览器测试：
+
+```bash
+npx playwright install chromium
+npm run test:e2e -w @workhub/frontend
+```
+
 
 ```bash
 npm run typecheck  # 前端 TS 检查、Go vet

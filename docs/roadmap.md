@@ -6,7 +6,7 @@
 - [x] Shared adventure design tokens and reusable parchment/status/progress components.
 - [x] Responsive sidebar and distinct page layouts for home, projects, calendar, journal, capture, inbox and growth.
 - [x] GitHub Actions checks for frontend and Go.
-- [ ] Produce and commit a reproducible frontend package-lock.json; then change CI to npm ci.
+- [x] Commit a reproducible frontend package-lock.json and switch CI to npm ci.
 - [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
 - [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.

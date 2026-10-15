@@ -152,3 +152,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .home-bottom .fantasy-card-header h2 { font-family:var(--wh-font-display); }
 @media(max-width:1450px){.map-stage-v2{min-height:540px;}}
 @media(max-width:760px){.map-stage-v2{min-height:470px;}.map-stage-v2 .map-heading{padding:19px 16px;}.map-stage-v2 .map-heading h1{font-size:26px;}.map-stage-v2 .map-heading p{font-size:11px;}}
+
+/* M1.3 visual regression correction: hide mobile menu trigger on wide screens. */
+.topbar .menu-toggle { display: none; }
+@media (max-width: 760px) { .topbar .menu-toggle { display: inline-flex; } }

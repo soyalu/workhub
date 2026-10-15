@@ -11,7 +11,7 @@
 - [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
 - [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
-- [ ] Import raster asset binaries into the branch and validate rendered screenshots; until then the SVG remains a fallback.
+- [ ] Commit the three original raster art files to the branch and validate screenshots; until binary files are committed, SVG remains a fallback.
 - [ ] Commission/produce clean high-resolution map art **without embedded interface text**, and a separate production portrait; temporary concept-art crops are not final.
 - [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 

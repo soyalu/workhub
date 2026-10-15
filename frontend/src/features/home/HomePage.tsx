@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
-  BookOpenText, CalendarDays, Compass, Feather, FolderKanban, Inbox,
+  BookOpenText, CalendarDays, Feather, FolderKanban, Inbox,
   ListChecks, Sparkles, Trophy, Zap, ChartNoAxesCombined,
   type LucideIcon,
 } from 'lucide-react';
@@ -48,21 +48,15 @@ export function HomePage() {
             </Link>
           ))}
         </div>
-        <div className="map-caption">独立场景美术层 · 演示数据 · 生产级素材待最终验收</div>
+        <div className="map-caption">三张独立美术资源 · 模拟业务数据</div>
       </section>
       <aside className="hero-summary hero-summary-v2">
-        <div className="hero-identity">
-          <span className="eyebrow">YOUR JOURNEY</span>
-          <div className="hero-avatar hero-avatar-illustrated" aria-hidden="true">
-            <img
-              src="/art/traveler.webp"
-              alt=""
-              onError={(event) => { event.currentTarget.hidden = true; }}
-            />
-            <Compass className="avatar-fallback-icon" size={42} />
+        <div className="hero-identity hero-identity-art">
+          <div className="character-stage">
+            <div className="character-title"><span className="character-sun">✺</span><div><strong>你好，旅行者</strong><small>每一天，都是崭新的旅程</small></div></div>
+            <img className="traveler-portrait" src="/art/traveler.webp" alt="蓝色斗篷的奇幻旅行者立绘" onError={(e) => { e.currentTarget.hidden = true; }} />
+            <div className="character-quote">工作是通往更大世界的修行。</div>
           </div>
-          <h2>你好，旅行者</h2>
-          <p>工作是通往更大世界的修行。</p>
           <div className="hero-level"><strong>Lv. 1</strong><small>成长体系 · 待接入真实数据</small></div>
           <ProgressMeter value={0} label="成长经验" tone="gold"/>
         </div>

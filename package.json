@@ -18,7 +18,8 @@
     "typecheck": "npm run typecheck -w @workhub/frontend && go -C backend vet ./...",
     "test": "go -C backend test ./...",
     "test:backend": "go -C backend test ./...",
-    "vet:backend": "go -C backend vet ./..."
+    "vet:backend": "go -C backend vet ./...",
+    "art:verify": "node scripts/verify-art.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

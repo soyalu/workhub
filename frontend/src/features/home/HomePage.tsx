@@ -3,12 +3,13 @@ import { useState } from 'react';
 import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
   ListChecks, Sparkles, Trophy, Zap, ChartNoAxesCombined,
+  Compass, Flame, Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
   type LucideIcon,
 } from 'lucide-react';
 import { FantasyCard } from '../../components/fantasy/FantasyCard';
 import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
 import { StatusBadge } from '../../components/fantasy/StatusBadge';
-import { previewTasks, mockDataNotice } from '../../mocks/preview';
+import { previewInbox, previewAgenda, mockDataNotice } from '../../mocks/preview';
 
 const points: { label: string; description: string; to: string; icon: LucideIcon; position: string }[] = [
   { label: '主线任务', description: '今日待办', to: '/tasks', icon: ListChecks, position: 'point-tasks' },
@@ -61,31 +62,72 @@ export function HomePage() {
           <div className="hero-level"><strong>Lv. 1</strong><small>成长体系 · 待接入真实数据</small></div>
           <ProgressMeter value={0} label="成长经验" tone="gold"/>
         </div>
-        <div className="hero-stat-grid">
+        <div className="hero-stat-grid" aria-label="个人成长统计尚未接入真实数据">
           <div><Zap size={22}/><strong>—</strong><span>今日能量</span></div>
-          <div><Trophy size={22}/><strong>—</strong><span>连续记录</span></div>
+          <div><Flame size={22}/><strong>—</strong><span>连续记录</span></div>
+          <div><ChartNoAxesCombined size={22}/><strong>—</strong><span>本周进度</span></div>
+          <div><Trophy size={22}/><strong>—</strong><span>成就徽章</span></div>
         </div>
         <FantasyCard title="今日任务链" icon={ListChecks}>
           <div className="quest-steps"><span className="quest-step is-current">规划</span><span className="quest-step">执行</span><span className="quest-step">复盘</span><span className="quest-step">成长</span></div>
           <p className="muted-small">记录真实的工作活动后，这里将呈现可追溯的任务进度。</p>
         </FantasyCard>
       </aside>
-      <section className="home-bottom">
-        <FantasyCard title="今日待办" icon={ListChecks} action={<Link to="/tasks" className="text-link">查看全部 →</Link>}>
-          <div className="compact-list">{previewTasks.map(task=>(
-            <div key={task.id} className="compact-item"><span className={'quest-dot tone-' + task.tone}/><div><strong>{task.title}</strong><small>{task.note}</small></div></div>
-          ))}</div>
-        </FantasyCard>
-        <FantasyCard title="日程入口" icon={CalendarDays} action={<Link to="/calendar" className="text-link">打开日历 →</Link>}>
-          <p className="muted-small">月 / 周 / 日工作安排、历史补录与日志跳转。</p>
-          <Link to="/calendar" className="outline-link"><CalendarDays size={16}/> 查看工作日历</Link>
-        </FantasyCard>
-        <FantasyCard title="快速记录" icon={Feather} action={<Link to="/capture" className="text-link">去记录 →</Link>}>
-          <p className="muted-small">一句话记录工作信息，信息不足时由系统精准追问。</p>
-          <Link to="/capture" className="outline-link"><Feather size={16}/> 打开录入面板</Link>
-        </FantasyCard>
+      <section className="home-bottom" aria-label="首页工作摘要">
         <FantasyCard title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>
-          <div className="inbox-placeholder"><StatusBadge tone="amber">设计中</StatusBadge><span>待补充、待确认、已归档信息的统一入口。</span></div>
+          <div className="home-inbox-list">
+            {previewInbox.map((item) => (
+              <div className="home-inbox-row" key={item.id}>
+                <span className={'inbox-row-icon inbox-' + item.tone} aria-hidden="true"><Bell size={15}/></span>
+                <div><strong>{item.title}</strong><small>{item.summary}</small></div>
+                <span className="inbox-row-time">示例</span>
+              </div>
+            ))}
+          </div>
+        </FantasyCard>
+        <FantasyCard title="工作日历" icon={CalendarDays} action={<Link to="/calendar" className="text-link">+ 查看日历 →</Link>}>
+          <div className="home-calendar-heading">
+            <strong>{new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric', weekday: 'long' }).format(new Date())}</strong>
+            <StatusBadge tone="muted">演示日程</StatusBadge>
+          </div>
+          <div className="home-agenda">
+            {previewAgenda.map((item) => (
+              <div className="home-agenda-row" key={item.id}>
+                <span>{item.time}</span><i className={'agenda-dot agenda-' + item.tone} aria-hidden="true"/>
+                <div><strong>{item.title}</strong><small>示例安排 · 非实际工作记录</small></div>
+              </div>
+            ))}
+          </div>
+        </FantasyCard>
+        <FantasyCard title="每日工作日志" icon={BookOpenText} action={<Link to="/journal" className="text-link">去记录 →</Link>}>
+          <div className="journal-preview-placeholder">记录今天的工作、收获与待解决的问题……<small>日志自动生成与确认将在 M3 接入</small></div>
+          <div className="home-quick-heading"><Feather size={14}/> 快速录入</div>
+          <div className="home-quick-grid">
+            <Link to="/capture?kind=task"><ListChecks size={14}/> 记任务</Link>
+            <Link to="/capture?kind=idea"><Lightbulb size={14}/> 记灵感</Link>
+            <Link to="/capture?kind=question"><CircleHelp size={14}/> 记问题</Link>
+            <Link to="/capture?kind=meeting"><CalendarDays size={14}/> 记会议</Link>
+            <Link to="/capture?kind=todo"><Feather size={14}/> 记待办</Link>
+            <Link to="/capture?kind=material"><FileText size={14}/> 记材料</Link>
+          </div>
+        </FantasyCard>
+        <FantasyCard title="近期成就与奖励" icon={Trophy} action={<Link to="/growth" className="text-link">查看全部 →</Link>}>
+          <div className="home-achievement-grid">
+            {[
+              { icon: Compass, title: '连续记录' },
+              { icon: Mountain, title: '高效行动' },
+              { icon: BookOpenText, title: '知识收集' },
+              { icon: Crown, title: '项目推进' },
+            ].map(({ icon: Icon, title }) => (
+              <div className="home-achievement" key={title}>
+                <span aria-hidden="true"><Icon size={22}/></span><strong>{title}</strong><small>待解锁</small>
+              </div>
+            ))}
+          </div>
+          <div className="home-reward-preview">
+            <Gift size={25} aria-hidden="true"/>
+            <div><strong>冒险奖励待解锁</strong><small>完成真实工作后再计算成长与奖励</small></div>
+          </div>
         </FantasyCard>
       </section>
       <p className="mock-notice">{mockDataNotice}</p>

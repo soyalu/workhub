@@ -25,6 +25,10 @@ test('首页的冒险场景及六个功能入口可访问', async ({ page }, tes
   await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(6);
+  await expect(page.locator('.home-bottom .fantasy-card-header h2')).toHaveText([
+    '信息收件箱', '工作日历', '每日工作日志', '近期成就与奖励',
+  ]);
+  await expect(page.locator('.home-quick-grid a')).toHaveCount(6);
   await expect(map.locator('a.map-node .map-node-medallion')).toHaveCount(6);
   await expect(map.locator('a.map-node .map-node-arrow')).toHaveCount(6);
   await expect(map.getByRole('link', { name: /项目中心/ })).toBeVisible();
@@ -112,4 +116,12 @@ test('地图美术缺失时明确提示且导航仍可用', async ({ page }) => 
   await expect(page.locator('img.adventure-scene')).toBeHidden();
   await page.getByRole('region', { name: '冒险地图导航' }).getByRole('link', { name: /项目中心/ }).click();
   await expect(page).toHaveURL('http://127.0.0.1:5173/projects');
+});
+
+test('首页快速录入类别传递至录入页但不冒充已保存', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('.home-quick-grid').getByRole('link', { name: '记会议' }).click();
+  await expect(page).toHaveURL(/\/capture\?kind=meeting$/);
+  await expect(page.getByText(/快捷入口：会议交流/)).toBeVisible();
+  await expect(page.getByRole('button', { name: '预览输入（不保存）' })).toBeDisabled();
 });

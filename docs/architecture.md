@@ -1,36 +1,62 @@
 # WorkHub · Architecture Baseline
 
-## Scope
+## Product boundaries
 
-Personal market consulting and office support, not a corporate CRM, OA or authoritative attendance system. New project opportunities and existing projects share consultation work, meetings, material writing and bid-related events.
+WorkHub is a personal consulting and productivity application, **not** an enterprise CRM, OA, or authoritative attendance system. Opportunities originate mostly from sales and are periodically updated; ongoing project consulting also creates meetings, documents, bids, tasks, and work-event records.
 
-## Major layers
+- A **CalendarEvent** is a planned appointment, not evidence it happened.
+- A **Task** describes work to do, not proof of its completion.
+- A **WorkEvent** describes confirmed actual work and must retain the occurrence date and source evidence.
+- A clock-in/out span is not automatically attributable work effort.
+- Generated journals and consulting reports must be editable, confirmed, and traceable to source records.
 
-- frontend/: React + Vite for browser UI; later reusable in Tauri for macOS.
-- backend/: Fastify API; SQLite, scheduling and input recognition are future milestones.
-- docs/: architecture decisions, milestones and domain contracts.
+## Technical baseline (Go migration)
 
-Development Vite proxy: /api -> 127.0.0.1:3001. Backend binds localhost by default; CORS is configured with explicit origins.
+```text
+React + TypeScript + Vite (frontend/)
+          |
+          | /api (development proxy; same-origin in production)
+          v
+Go 1.23+ net/http (backend/)
+  cmd/server         application entrypoint, graceful shutdown
+  internal/config    env and bind address
+  internal/httpapi   handlers and route tests
+          |
+          v
+SQLite + files (planned M2)
+```
 
-## Planned domain objects
+Node/npm only manages the **frontend** workspace; Go Modules independently manages the backend. Root npm scripts orchestrate builds and local startup. For the initial single health endpoint, Go 1.23 standard `http.ServeMux` avoids third-party routing dependencies; Chi can be introduced if routing complexity later warrants it.
+
+The backend listens on `127.0.0.1:3001` by default. For production, use a reverse proxy or equivalent same-origin deployment, authentication, TLS and private data storage. Do **not** bind to public interfaces without security controls.
+
+## Planned domain objects (M2 onwards)
 
 | Entity | Meaning |
 | --- | --- |
-| Project | Project opportunity or existing project, including sales progress snapshots |
-| Capture | Original input, extracted facts, follow-up questions and lifecycle |
-| WorkEvent | Verified activity with occurrence date and source links |
-| Task | Plan and pending action, not proof of completion |
-| CalendarEvent | Scheduled event, not proof of attendance |
-| Artifact | Documents, versions, deliverables and file references |
-| TimeRecord | Clock-in/out and independently confirmed actual effort |
-| WorkReport | Editable journal or monthly consulting report, with revisions |
+| Project | New opportunity or existing project; sales progress snapshots |
+| Capture | Original input, extracted facts, questions and lifecycle |
+| WorkEvent | Verified work with occurrence time and evidence |
+| Task | Pending or completed action, deadlines and project links |
+| CalendarEvent | Meeting / schedule, separate from actual work |
+| Artifact | PPT, Word, PDF, file references, versions and deliverables |
+| TimeRecord | Clock-in/out and separately sourced actual effort |
+| WorkReport | Editable daily journal and monthly consulting report with history |
 
-Incomplete captures move between pending_details, pending_confirmation and accepted/archived/recycle_bin; important source-linked content must be protected from destructive cleanup. Never infer a meeting occurred solely from a calendar item, or count attendance span as project effort.
+Pending captures are retained without being counted as official events. State flow: pending_details -> pending_confirmation -> accepted; optional archived and recycle_bin with recoverable cleanup. Important or connected source information must be protected against silent deletion.
 
-## Initial API
+## Initial API contract
 
-GET /api/health returns JSON with status=ok and service=workhub-api. M1 intentionally implements no database, business endpoints or AI integration. All example pages are explicitly placeholders.
+`GET /api/health` returns `{"status":"ok","service":"workhub-api"}`. The frontend keeps requesting the same relative URL; moving from Fastify to Go does not change the API contract.
 
-## Security
+M1 deliberately has no business handlers, database, migration system or AI model integration. Unit tests cover API response, unsupported method and environment configuration.
 
-Never commit customer names, internal presentations, bid files, personal logs, real databases or credentials to this public repository. Persistent operation later requires authentication, authorization, encrypted transport, backups and documented retention.
+## Future considerations
+
+SQLite initially, with migrations and explicit backup / restore. Develop project, capture, workevent, calendar, journal, timing and scheduler packages only when real use cases are being built. Consider OpenAPI for typed frontend clients once domain APIs are defined.
+
+Fantasy visual style is a design system, not a page-layout template. Homepage remains an exploration map; business pages use appropriate list/grid/calendar/editor arrangements.
+
+## Public repository security
+
+No company documents, customer/bid records, user logs, credentials, database content or secrets in source control. Mobile and NAS access will require proper authentication, authorization and encryption, not merely configurable CORS.

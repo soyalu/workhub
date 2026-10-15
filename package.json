@@ -6,16 +6,19 @@
     "node": ">=22.0.0"
   },
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend"
   ],
   "scripts": {
     "dev": "concurrently -k -n api,web -c cyan,green \"npm:dev:backend\" \"npm:dev:frontend\"",
-    "dev:backend": "npm run dev -w @workhub/backend",
+    "dev:backend": "go -C backend run ./cmd/server",
     "dev:frontend": "npm run dev -w @workhub/frontend",
-    "build": "npm run build --workspaces",
-    "typecheck": "npm run typecheck --workspaces",
-    "test": "npm run test -w @workhub/backend"
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "npm run build -w @workhub/frontend",
+    "build:backend": "go -C backend build ./...",
+    "typecheck": "npm run typecheck -w @workhub/frontend && go -C backend vet ./...",
+    "test": "go -C backend test ./...",
+    "test:backend": "go -C backend test ./...",
+    "vet:backend": "go -C backend vet ./..."
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

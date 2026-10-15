@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
-  BookOpenText, CalendarDays, Feather, FolderKanban, Inbox,
+  BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
   ListChecks, Sparkles, Trophy, Zap, ChartNoAxesCombined,
   type LucideIcon,
 } from 'lucide-react';
@@ -43,17 +43,17 @@ export function HomePage() {
         <div className="map-nodes">
           {points.map(({ label, description, to, icon: Icon, position }) => (
             <Link className={'map-node ' + position} key={to} to={to}>
-              <span className="map-node-icon"><Icon size={20}/></span>
+              <span className="map-node-medallion" aria-hidden="true"><Icon size={21} strokeWidth={2}/></span>
               <span className="map-node-copy"><strong>{label}</strong><small>{description}</small></span>
+              <ChevronRight className="map-node-arrow" size={17} aria-hidden="true" />
             </Link>
           ))}
         </div>
-        <div className="map-caption">三张独立美术资源 · 模拟业务数据</div>
       </section>
       <aside className="hero-summary hero-summary-v2">
         <div className="hero-identity hero-identity-art">
           <div className="character-stage">
-            <div className="character-title"><span className="character-sun">✺</span><div><strong>你好，旅行者</strong><small>每一天，都是崭新的旅程</small></div></div>
+            <div className="character-title"><span className="character-sun" aria-hidden="true">✺</span><div><strong>你好，旅行者</strong><small>每一天，都是崭新的旅程</small></div></div>
             <img className="traveler-portrait" src="/art/traveler.webp" alt="蓝色斗篷的奇幻旅行者立绘" onError={(e) => { e.currentTarget.hidden = true; }} />
             <div className="character-quote">工作是通往更大世界的修行。</div>
           </div>

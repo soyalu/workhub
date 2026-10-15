@@ -259,3 +259,241 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (min-width: 1320px) {
   .home-bottom { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+
+/* M1.3 visual refinement v2 — ornate adventure markers & responsive layout.
+   These are real DOM links, not labels baked into the landscape image. */
+.map-stage-v2.is-raster-art {
+  border-color: #c6a25c;
+  box-shadow: 0 0 0 1px #634d2e, 0 14px 32px #1e344751, inset 0 0 0 3px #fbeac2;
+}
+.map-stage-v2.is-raster-art::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,#243f5c12 0%,transparent 34%,#071c3822 100%);
+}
+.map-stage-v2.is-raster-art .map-heading {
+  position: relative;
+  z-index: 2;
+  max-width: 76%;
+  padding: 24px 33px 30px;
+  width: fit-content;
+  background: radial-gradient(ellipse at 18% 10%,#fff9eafa 0%,#fff8e5d9 46%,#fff8e500 76%);
+  border-radius: 0;
+}
+.map-stage-v2.is-raster-art .map-heading h1 { letter-spacing: 1px; }
+.map-stage-v2.is-raster-art .map-node {
+  --medal-top: #3a82ae;
+  --medal-bottom: #15385b;
+  min-width: 178px;
+  min-height: 62px;
+  padding: 7px 25px 7px 32px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #b68940;
+  border-radius: 5px 11px 11px 5px;
+  color: #42351f;
+  background: linear-gradient(125deg,#fff9e7fa 4%,#ffedcaec 66%,#f0d4a9f2);
+  box-shadow: 0 4px 0 #65462650, 0 8px 19px #11345470, inset 0 0 0 1px #fff8df;
+  isolation: isolate;
+}
+.map-stage-v2.is-raster-art .map-node::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid #e9cd97b3;
+  border-radius: 2px 7px 7px 2px;
+  pointer-events: none;
+}
+.map-stage-v2.is-raster-art .map-node::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%) rotate(45deg);
+  border-top: 2px solid #caa35f;
+  border-right: 2px solid #caa35f;
+  background: #eed5a8;
+}
+.map-stage-v2.is-raster-art .map-node-medallion {
+  position: absolute;
+  top: 50%;
+  left: -25px;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  color: #fff3ca;
+  border-radius: 50%;
+  border: 3px double #f3cf80;
+  background: radial-gradient(circle at 28% 23%,var(--medal-top),var(--medal-bottom) 69%);
+  box-shadow: 0 0 0 3px #71542c,0 4px 12px #0616269c,inset 0 2px 9px #edf7ff27;
+}
+.map-stage-v2.is-raster-art .map-node-copy { min-width: 0; gap: 5px; }
+.map-stage-v2.is-raster-art .map-node-copy strong {
+  font-size: 15px;
+  color: #40301f;
+  letter-spacing: .4px;
+}
+.map-stage-v2.is-raster-art .map-node-copy small {
+  color: #6e624f;
+  font-size: 10px;
+}
+.map-stage-v2.is-raster-art .map-node-arrow {
+  position: absolute;
+  right: 8px;
+  color: #94703a;
+  flex: 0 0 auto;
+}
+.map-stage-v2.is-raster-art .point-tasks { --medal-top: #d39b35; --medal-bottom: #6c3e1f; }
+.map-stage-v2.is-raster-art .point-projects { --medal-top: #417eba; --medal-bottom: #193e77; }
+.map-stage-v2.is-raster-art .point-calendar { --medal-top: #c87057; --medal-bottom: #823328; }
+.map-stage-v2.is-raster-art .point-capture { --medal-top: #b17ddb; --medal-bottom: #5b348a; }
+.map-stage-v2.is-raster-art .point-journal { --medal-top: #c2a35f; --medal-bottom: #775035; }
+.map-stage-v2.is-raster-art .point-growth { --medal-top: #3a9dca; --medal-bottom: #214b8f; }
+.map-stage-v2.is-raster-art .map-node:hover {
+  border-color: #ffdb8f;
+  box-shadow: 0 5px 0 #76532d55,0 11px 26px #102c50ad, 0 0 0 3px #ffde8959;
+}
+.map-stage-v2.is-raster-art .map-node:focus-visible {
+  outline: 3px solid #ffe8aa;
+  outline-offset: 7px;
+}
+
+/* Character: keep the actual transparent bitmap, soften the cutout and
+   separate it from overlaying labels. */
+.hero-summary-v2 .character-stage {
+  background:
+    radial-gradient(ellipse at 72% 15%,#7ba5c66e,transparent 54%),
+    linear-gradient(155deg,#2e5478 0%,#163451 63%,#0c1b2f);
+  border: 1px solid #7b704e;
+  box-shadow: inset 0 0 0 2px #d7b46f26,inset 0 -22px 43px #0613265e;
+}
+.hero-summary-v2 .character-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border: 1px solid #f0d6a275;
+  border-radius: 10px;
+}
+.hero-summary-v2 .traveler-portrait {
+  object-fit: contain;
+  object-position: bottom center;
+  height: 112%;
+  bottom: -11%;
+  left: -4%;
+  width: 112%;
+  -webkit-mask-image: linear-gradient(to bottom,#000 0%,#000 77%,transparent 100%);
+  mask-image: linear-gradient(to bottom,#000 0%,#000 77%,transparent 100%);
+  filter: drop-shadow(0 9px 18px #06152abf);
+}
+.hero-summary-v2 .character-title { z-index: 3; }
+.hero-summary-v2 .character-quote {
+  z-index: 4;
+  border: 1px solid #d9b779;
+  background: linear-gradient(120deg,#fff5dfea,#f2dfbdec);
+  box-shadow: 0 3px 9px #081a3180;
+}
+
+/* Ornate parchment cards, still rendered as accessible HTML. */
+.home-bottom .fantasy-card {
+  position: relative;
+  border-color: #b99154;
+  box-shadow: 0 4px 0 #ceb88760,0 8px 18px #222c3f1f;
+  background: linear-gradient(130deg,#fffaf0,#fbf0d8 75%,#f4e3c3);
+}
+.home-bottom .fantasy-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(45deg,transparent 51%,#c19c61 52%,#f1d7a8 56%,transparent 61%);
+  opacity: .7;
+}
+.home-bottom .fantasy-card-header h2 { color: #263a51; }
+.home-bottom .text-link { color: #765327; font-weight: 650; }
+.home-bottom .outline-link {
+  border: 1px solid #c49b5d;
+  background: linear-gradient(#fff8e9,#f1dfbc);
+  color: #694824;
+}
+.home-bottom .outline-link:hover { background: #e9d0a2; }
+.hero-summary-v2 .quest-steps { position: relative; }
+.hero-summary-v2 .quest-steps::before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  left: 8%; right: 8%; top: 50%;
+  background: linear-gradient(90deg,#a2d7aa,#e0b65e,#45546e);
+}
+.hero-summary-v2 .quest-step {
+  position: relative;
+  z-index: 1;
+  border: 1px solid #7b8192;
+  min-width: 39px;
+  text-align: center;
+}
+.hero-summary-v2 .quest-step.is-current {
+  border-color: #efcb7e;
+  box-shadow: 0 0 0 2px #ca995b36;
+}
+
+@media (max-width: 760px) {
+  /* The map scene stays scenic; interactive destinations use a separate
+     full-width 2x3 dock instead of floating, cropped desktop hotspots. */
+  .map-stage-v2.is-raster-art { min-height: 610px; }
+  .map-stage-v2.is-raster-art .map-heading {
+    padding: 15px 18px 23px;
+    max-width: 97%;
+  }
+  .map-stage-v2.is-raster-art .map-nodes {
+    position: absolute;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-auto-rows: minmax(52px,auto);
+    align-content: end;
+    gap: 10px 8px;
+    padding: 45px 13px 18px 24px;
+    background: linear-gradient(to top,#122c4cbf 0%,#152f4c8a 65%,transparent);
+  }
+  .map-stage-v2.is-raster-art .map-node,
+  .map-stage-v2.is-raster-art .map-node:hover {
+    position: relative;
+    inset: auto;
+    top: auto; left: auto;
+    transform: none;
+    min-width: 0;
+    width: 100%;
+    min-height: 52px;
+    padding: 7px 20px 7px 31px;
+    margin: 0;
+  }
+  .map-stage-v2.is-raster-art .map-node-medallion {
+    left: -16px;
+    width: 39px;
+    height: 39px;
+    border-width: 2px;
+  }
+  .map-stage-v2.is-raster-art .map-node-medallion svg { width: 17px; height: 17px; }
+  .map-stage-v2.is-raster-art .map-node-copy strong { font-size: 12px; }
+  .map-stage-v2.is-raster-art .map-node-copy small { display: none; }
+  .map-stage-v2.is-raster-art .map-node-arrow { right: 4px; width: 13px; }
+  .hero-summary-v2 .character-stage { min-height: 278px; }
+}
+@media (max-width: 375px) {
+  .map-stage-v2.is-raster-art .map-node { padding-left: 25px; padding-right: 12px; }
+  .map-stage-v2.is-raster-art .map-node-copy strong { font-size: 11px; }
+  .map-stage-v2.is-raster-art .map-node-arrow { display: none; }
+}

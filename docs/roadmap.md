@@ -8,7 +8,8 @@
 - [x] GitHub Actions checks for frontend and Go.
 - [x] Commit a reproducible frontend package-lock.json and switch CI to npm ci.
 - [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
-- [ ] Review captured screenshots against the approved homepage; run real-device responsive acceptance.
+- [x] Refine map node medallions, traveler cutout blending, parchment cards and mobile destination dock; verify via CI screenshots.
+- [ ] Complete side-by-side visual acceptance against the approved homepage and test on actual devices.
 - [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
 - [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
 - [x] Commit three WebP raster assets on the feature branch and validate their hashes in CI; SVG remains fallback only for loading failures.

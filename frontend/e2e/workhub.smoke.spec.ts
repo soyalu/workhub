@@ -15,6 +15,8 @@ test('首页的冒险场景及六个功能入口可访问', async ({ page }, tes
   await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(6);
+  await expect(map.locator('a.map-node .map-node-medallion')).toHaveCount(6);
+  await expect(map.locator('a.map-node .map-node-arrow')).toHaveCount(6);
   await expect(map.getByRole('link', { name: /项目中心/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
   await map.getByRole('link', { name: /项目中心/ }).click();
@@ -43,6 +45,17 @@ test('手机屏幕可使用导航并看到真实输入入口', async ({ page }, 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await expect(page.getByRole('button', { name: '打开导航' })).toBeVisible();
+  const mobileMap = page.getByRole('region', { name: '冒险地图导航' });
+  await expect(mobileMap.locator('a.map-node')).toHaveCount(6);
+  await expect(mobileMap.locator('a.map-node')).toHaveCSS('position', 'relative');
+  for (const node of await mobileMap.locator('a.map-node').all()) {
+    const bounds = await node.boundingBox();
+    expect(bounds).not.toBeNull();
+    if (bounds) {
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(391);
+    }
+  }
   await page.screenshot({ path: testInfo.outputPath('home-mobile.png'), fullPage: true });
   await page.getByRole('button', { name: '打开导航' }).click();
   const sidebar = page.locator('aside.app-sidebar');

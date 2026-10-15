@@ -1,31 +1,30 @@
 # WorkHub · Engineering Roadmap
 
-## M1: Foundation (Go migration)
-- [x] Product principles, README, .gitignore and frontend/backend split.
-- [x] React + Vite frontend placeholder.
-- [x] Replace Fastify/TypeScript backend with Go 1.23+ standard-library HTTP server.
-- [x] Preserve GET /api/health contract, add Go unit tests and clean shutdown.
-- [x] Root scripts run React (npm) + Go separately.
-- [ ] Verify npm dependency installation and frontend build; create package-lock.json.
-- [ ] Add CI for frontend build and Go tests.
-- [ ] Implement approved fantasy adventure UI as accessible, reusable React components.
+## M1: Foundation and design system
+- [x] Product requirements, GitHub repository, Go API skeleton.
+- [x] React Router navigation and M1 page skeletons on feature/m1-ui-foundation.
+- [x] Shared adventure design tokens and reusable parchment/status/progress components.
+- [x] Responsive sidebar and distinct page layouts for home, projects, calendar, journal, capture, inbox and growth.
+- [x] GitHub Actions checks for frontend and Go.
+- [ ] Produce and commit a reproducible frontend package-lock.json; then change CI to npm ci.
+- [ ] Run complete frontend dependencies/build validation, screenshot E2E and real-device responsive acceptance.
+- [ ] Rebuild approved layered homepage artwork as production assets and remove placeholder landscape.
+- [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 
-## M2: Contextual input and data model
+## M2: Context-aware input and persistence
+- SQLite migrations and private data storage.
 - Project, Capture, WorkEvent, Task, CalendarEvent and Artifact.
-- SQLite migrations, backup and privacy-safe tests.
-- One-line input, context lookup, minimal-validity checks and targeted follow-up.
-- Recoverable pending information lifecycle and retention policies.
+- Minimal-validity checking, targeted follow-up questions, pending/confirmed record lifecycle.
+- Verified work-event linkage to project and journal.
 
-## M3: Workday closed loop
-- Calendar month/week/day and historical journal timeline.
-- Editable, confirmed daily journal with source traceability.
-- Monthly consulting report and evidence-based aggregation.
+## M3: Daily work completion loop
+- Editable daily journal, past-date timeline and cross-module navigation.
+- Monthly consultation summaries from confirmed work sources.
 
-## M4: Productivity
-- Clock-in/out, work effort allocation and reminders.
-- Materials, achievements and useful self-analysis.
+## M4: Time and outcomes
+- Workday check-in/out and independently attributed effort.
+- Reminders, material outcomes and personal analytics.
 
-## M5: Desktop and multi-device
-- macOS Tauri shell, global quick capture and system notifications.
-- Mobile-friendly capture and authenticated NAS sync.
-- Optional AI assistance without fabricated work records.
+## M5: Desktop and multiple devices
+- macOS Tauri shell, system notifications and global quick capture.
+- Authenticated NAS/mobile usage and optional AI assistance.

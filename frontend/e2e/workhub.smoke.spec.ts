@@ -1,5 +1,15 @@
 import { expect, test } from '@playwright/test';
 
+// Browser-only UI smoke tests stub the API health indicator; Go API is
+// verified independently by its own CI job. Avoid Vite proxy 500 noise.
+test.beforeEach(async ({ page }) => {
+  await page.route('**/api/health', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ status: 'ok', service: 'workhub-api' }),
+  }));
+});
+
 test('首页的冒险场景及六个功能入口可访问', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');

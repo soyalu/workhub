@@ -507,6 +507,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .map-art-error {
   position: absolute;
   z-index: 6;
+  pointer-events: none; /* warning must not block real map links */
   top: 132px; left: 28px;
   max-width: min(380px,calc(100% - 56px));
   padding: 12px 16px;

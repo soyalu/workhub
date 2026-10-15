@@ -253,3 +253,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 760px) {
   .sidebar-footer { min-height: 210px; padding-top: 118px; }
 }
+
+/* Desktop density: preserve four summary panels as on the approved homepage.
+   Narrow viewports retain the two-column and single-column responsive layouts. */
+@media (min-width: 1320px) {
+  .home-bottom { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

@@ -47,7 +47,7 @@ test('手机屏幕可使用导航并看到真实输入入口', async ({ page }, 
   await expect(page.getByRole('button', { name: '打开导航' })).toBeVisible();
   const mobileMap = page.getByRole('region', { name: '冒险地图导航' });
   await expect(mobileMap.locator('a.map-node')).toHaveCount(6);
-  await expect(mobileMap.locator('a.map-node')).toHaveCSS('position', 'relative');
+  await expect(mobileMap.locator('a.map-node').first()).toHaveCSS('position', 'relative');
   for (const node of await mobileMap.locator('a.map-node').all()) {
     const bounds = await node.boundingBox();
     expect(bounds).not.toBeNull();

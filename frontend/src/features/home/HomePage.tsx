@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { AnimatedLandmark, type LandmarkTheme } from './AnimatedLandmark';
+import { PersistentParticleStage } from './PersistentParticleStage';
 import {
   BookOpenText, CalendarDays, Feather, FolderKanban, Inbox,
   ListChecks, Trophy, ChartNoAxesCombined, Compass,
@@ -78,14 +79,13 @@ export function HomePage() {
           <path d="M210 273 C280 240 330 210 472 156 S667 157 808 169" />
           <path d="M210 285 C160 365 158 403 200 462 S347 499 465 446 S591 334 640 328 S782 382 818 456" />
         </svg>
+        {effectsEnabled && <PersistentParticleStage tone={activeLandmark ?? 'quest'} boosted={activeLandmark !== null} />}
         <div className="map-nodes">
           {landmarks.map(({ label, description, to, icon, location, theme }) => (
             <AnimatedLandmark key={to} label={label} description={description} to={to}
               icon={icon} location={location} theme={theme}
               enabled={Boolean(effectsEnabled)}
               active={activeLandmark === theme}
-              particleVisible={Boolean(effectsEnabled) && (activeLandmark === theme ||
-                (activeLandmark === null && theme === 'quest'))}
               onActivate={setActiveLandmark}
               onDeactivate={(previous) => {
                 setActiveLandmark((current) => current === previous ? null : current);

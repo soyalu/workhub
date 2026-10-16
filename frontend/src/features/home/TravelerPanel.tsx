@@ -2,20 +2,22 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowUpRight, BookOpenCheck, ChartNoAxesCombined, ChevronRight,
-  Flame, Gift, ShieldCheck, Sparkles, Sun, Trophy, Zap,
+  Flame, ShieldCheck, Sparkles, Sun, Trophy, Zap,
   type LucideIcon,
 } from 'lucide-react';
 import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
 import { OrnateFrame } from '../../components/fantasy/OrnateFrame';
+import { OptionalArt } from './OptionalArt';
+import { RewardChest } from './RewardChest';
 
 const stageLabels = ['规划', '执行', '复盘', '成长'] as const;
 
-type Stat = { label: string; icon: LucideIcon; className: string };
+type Stat = { label: string; icon: LucideIcon; className: string; art: string };
 const stats: Stat[] = [
-  { label: '今日能量', icon: Zap, className: 'energy' },
-  { label: '连续记录', icon: Flame, className: 'streak' },
-  { label: '本周进度', icon: ChartNoAxesCombined, className: 'weekly' },
-  { label: '成就徽章', icon: Trophy, className: 'achievement' },
+  { label: '今日能量', icon: Zap, className: 'energy', art: 'energy' },
+  { label: '连续记录', icon: Flame, className: 'streak', art: 'streak' },
+  { label: '本周进度', icon: ChartNoAxesCombined, className: 'weekly', art: 'progress' },
+  { label: '成就徽章', icon: Trophy, className: 'achievement', art: 'achievements' },
 ];
 
 /**
@@ -57,9 +59,9 @@ export function TravelerPanel() {
       </div>
 
       <div className="hero-stat-grid m16-stat-grid" aria-label="成长指标暂未接入真实工作数据">
-        {stats.map(({ label, icon: Icon, className }) =>
+        {stats.map(({ label, icon: Icon, className, art }) =>
           <div key={label} className={'m16-stat m16-stat-' + className}>
-            <span className="m16-stat-ring"><Icon size={23} strokeWidth={2.2} aria-hidden="true"/></span>
+            <span className="m16-stat-ring"><OptionalArt src={"/art/badges/"+art+".webp"} fallback={<Icon size={23} strokeWidth={2.2} aria-hidden="true"/>}/></span>
             <strong>—</strong>
             <span>{label}</span>
           </div>
@@ -80,7 +82,7 @@ export function TravelerPanel() {
             </div>
           )}
           <Link className="quest-chain-reward m16-chain-reward" to="/growth" aria-label="查看成长奖励（尚未解锁）">
-            <span className="m16-reward-chest"><Gift size={27} strokeWidth={1.8} aria-hidden="true"/></span>
+            <span className="m16-reward-chest"><RewardChest status="locked"/></span>
             <small>奖励</small>
           </Link>
         </div>

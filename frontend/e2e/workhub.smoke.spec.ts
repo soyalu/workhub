@@ -309,3 +309,70 @@ test('M1.7 系统减少动效时七个地标均静止',async ({page})=>{
   await expect(page.locator('.animated-landmark[data-animation-enabled="false"]')).toHaveCount(7);
   await expect(page.locator('.quest-particle-aura')).toHaveCount(0);
 });
+
+
+test('persistent Pixi stage keeps the same canvas across landmark hover', async ({page}) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  const stage=map.locator('.persistent-particle-stage');
+  await expect(stage).toHaveCount(1);
+  await expect(stage).toHaveAttribute('data-stage-lifecycle','persistent');
+  await expect.poll(async()=>{
+    const canvas=await stage.locator('canvas').count();
+    return canvas===1 || await stage.getAttribute('data-effect-state')==='fallback';
+  }).toBeTruthy();
+  const initialCanvas=await stage.locator('canvas').elementHandle();
+  for (const [name,tone] of [
+    ['项目中心','project'],['信息收件箱','message'],
+    ['成长分析','growth'],['今日主线任务','quest'],
+  ]) {
+    await map.getByRole('link',{name:new RegExp('^'+name+'：')}).hover();
+    await expect(stage).toHaveAttribute('data-tone',tone);
+    await expect(map.locator('.persistent-particle-stage')).toHaveCount(1);
+    if(initialCanvas) {
+      expect(await initialCanvas.evaluate(element=>element.isConnected)).toBe(true);
+      expect(await stage.locator('canvas').count()).toBe(1);
+    }
+  }
+});
+
+
+test('成长徽章及宝箱保留未计算状态且图片缺失安全降级',async ({page})=>{
+  await page.goto('/');
+  const panel=page.getByRole('complementary',{name:'旅行者成长面板'});
+  await expect(panel.locator('.m16-stat')).toHaveCount(4);
+  await expect(panel.locator('[data-reward-status="locked"]')).toHaveCount(1);
+  await expect(panel.getByText('经验值尚未计算')).toBeVisible();
+  await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href','/growth');
+});
+
+
+test('M1.7 installed art files are decoded rather than using fallback icons', async ({page}, testInfo) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const panel=page.getByRole('complementary',{name:'旅行者成长面板'});
+  const badges=panel.locator('.m16-stat-ring img.optional-art');
+  await expect(badges).toHaveCount(4);
+  const chest=panel.locator('[data-reward-status="locked"] img.optional-art');
+  await expect(chest).toHaveCount(1);
+  for(const img of [badges.nth(0),badges.nth(1),badges.nth(2),badges.nth(3),chest]){
+    await expect.poll(async()=>{
+      return img.evaluate((el)=>el instanceof HTMLImageElement && el.complete && el.naturalWidth>0);
+    }).toBe(true);
+  }
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  for(const [label,tone] of [
+    ['今日主线任务','quest'],['项目中心','project'],['信息收件箱','message'],
+    ['快速录入','capture'],['工作日历','calendar'],
+    ['支线任务','side'],['成长分析','growth'],
+  ]){
+    await map.getByRole('link',{name:new RegExp('^'+label+'：')}).hover();
+    const art=map.locator('.animated-landmark[data-theme="'+tone+'"] .landmark-aura-art img.optional-art');
+    await expect(art).toHaveCount(1);
+    await expect.poll(async()=>{
+      return art.evaluate(el=>el instanceof HTMLImageElement && el.complete && el.naturalWidth>0);
+    }).toBe(true);
+  }
+  await page.screenshot({path:testInfo.outputPath('installed-art-hover-growth.png'),fullPage:true});
+});

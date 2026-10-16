@@ -48,3 +48,21 @@
 .adventure-dashboard .animated-landmark .is-canvas-fallback::before {
   background:radial-gradient(circle,var(--particle-light,#ffdc7677),transparent 72%);
 }
+
+
+/* M1.7 persistent effect canvas is a single overlay anchored to the map. */
+.adventure-dashboard .adventure-map .persistent-particle-stage {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  pointer-events:none !important;
+  z-index:2;
+  overflow:hidden;
+}
+.adventure-dashboard .adventure-map .persistent-particle-stage canvas {
+  display:block;
+  width:100%;height:100%;
+  pointer-events:none !important;
+}
+.adventure-dashboard .adventure-map .persistent-particle-stage.is-canvas-fallback {
+  background:radial-gradient(circle at 20% 43%,#ffdb6850,transparent 14%);
+}

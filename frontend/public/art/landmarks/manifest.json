@@ -1,0 +1,164 @@
+{
+  "source": "奇幻金蓝风格空白徽章标签图集.png",
+  "source_sha256": "db626081cf426a10c93028a84151826eb5aafacb49b4d8262bcdf77333b3a6b2",
+  "count": 21,
+  "items": [
+    {
+      "file": "emblems/quest.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 35128,
+      "sha256": "6446668dc77287ce8c9a2e633a55b36964763c5c904638413f806fb25430bb35"
+    },
+    {
+      "file": "banners/quest.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 11360,
+      "sha256": "343dcd2eff008eccde0bfd2caba0ca3cfa94f65333ef493c7b2689a087fe6177"
+    },
+    {
+      "file": "combined/quest.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 46960,
+      "sha256": "a3bd7f36645f284ad4f9f4adb697c509e58538a936633931baffc06f92c03f8a"
+    },
+    {
+      "file": "emblems/project.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 31476,
+      "sha256": "9c7fbe51efab60767de8e8e523f2593cd051f26fe2709014c4871e6012c700f2"
+    },
+    {
+      "file": "banners/project.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 13082,
+      "sha256": "78e00191c2c6e3cc79ecba3af34ecad48aa10e5a0079dc200aecbe676e84e023"
+    },
+    {
+      "file": "combined/project.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 45108,
+      "sha256": "b95f0fd58ce36a5adede6d480971ba9ec1afd26a3858f60146b3d0804512701e"
+    },
+    {
+      "file": "emblems/message.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 31248,
+      "sha256": "e89ee57a5cbc3e58ef626a04a732fc76cd36e7eb1d7af91eb4cd5084f474da7b"
+    },
+    {
+      "file": "banners/message.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 12500,
+      "sha256": "1e6452128e5eff1400e60f56524399485b01d6f60009fd133b2644ef08a65bb9"
+    },
+    {
+      "file": "combined/message.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 44660,
+      "sha256": "23bcd2bfb480a879418ffe57c6f51f31b00ddeacfb9ec71792b5851cf59c931b"
+    },
+    {
+      "file": "emblems/capture.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 38160,
+      "sha256": "6ad45d523883cb46cad0e56c4f5134c1a4d3fd7ef7613a3bb6b0cd357e99f11a"
+    },
+    {
+      "file": "banners/capture.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 14086,
+      "sha256": "c3144777c58aa774d089aced4e1b5caf5b4272cb1c8b1ca66f177d7a8c98be4b"
+    },
+    {
+      "file": "combined/capture.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 53286,
+      "sha256": "8d7fb3ba5a373c14e190d7f889f81e2483d6ba013ca3e1256561c5e48d53bd29"
+    },
+    {
+      "file": "emblems/side.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 31836,
+      "sha256": "7212e8987f1849ec22a0f121798ae7804eaa6131e6d69c51c22259745823ba91"
+    },
+    {
+      "file": "banners/side.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 14332,
+      "sha256": "10ebc77e5ba3940e1e0f0d14f25ec6c61f0b0ba32697acfc9a72bc51afd3ef4a"
+    },
+    {
+      "file": "combined/side.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 48216,
+      "sha256": "1a8f71b07a2031d95502843015170794ce026303577a00351e607f8d7e99c225"
+    },
+    {
+      "file": "emblems/calendar.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 30124,
+      "sha256": "009c06395e9f02039938ecbf6e0780bc68a973ae85babd60e44c710ca7818a26"
+    },
+    {
+      "file": "banners/calendar.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 13592,
+      "sha256": "ae686c4522e73f80481a1208cf3d29192dabbe08322067e2ddd6f6cd1745798f"
+    },
+    {
+      "file": "combined/calendar.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 45828,
+      "sha256": "bd7e80ddc371bef0144d10af9c32e97ea27950bd2e2cbbc7a68957b6e5615abd"
+    },
+    {
+      "file": "emblems/growth.webp",
+      "width": 285,
+      "height": 325,
+      "bytes": 40158,
+      "sha256": "49c720c1ca991f48682b82da0d725d57fd4002a96ca5481b51fbda5f08ff0a59"
+    },
+    {
+      "file": "banners/growth.webp",
+      "width": 360,
+      "height": 154,
+      "bytes": 9808,
+      "sha256": "8e763f0a3feb8355890bd751aae28267f78dec760aaee5bbe1c244591c670862"
+    },
+    {
+      "file": "combined/growth.webp",
+      "width": 510,
+      "height": 325,
+      "bytes": 50474,
+      "sha256": "8378cbb6a714eb2607fafca4c2481729788a7e895e4ee9ca045548745a3a91f1"
+    }
+  ],
+  "design": {
+    "emblem_width": 285,
+    "emblem_height": 325,
+    "banner_width": 360,
+    "banner_height": 154,
+    "banner_origin": [
+      170,
+      112
+    ]
+  }
+}

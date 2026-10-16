@@ -309,3 +309,30 @@ test('M1.7 系统减少动效时七个地标均静止',async ({page})=>{
   await expect(page.locator('.animated-landmark[data-animation-enabled="false"]')).toHaveCount(7);
   await expect(page.locator('.quest-particle-aura')).toHaveCount(0);
 });
+
+
+test('persistent Pixi stage keeps the same canvas across landmark hover', async ({page}) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  const stage=map.locator('.persistent-particle-stage');
+  await expect(stage).toHaveCount(1);
+  await expect(stage).toHaveAttribute('data-stage-lifecycle','persistent');
+  await expect.poll(async()=>{
+    const canvas=await stage.locator('canvas').count();
+    return canvas===1 || await stage.getAttribute('data-effect-state')==='fallback';
+  }).toBeTruthy();
+  const initialCanvas=await stage.locator('canvas').elementHandle();
+  for (const [name,tone] of [
+    ['项目中心','project'],['信息收件箱','message'],
+    ['成长分析','growth'],['今日主线任务','quest'],
+  ]) {
+    await map.getByRole('link',{name:new RegExp('^'+name+'：')}).hover();
+    await expect(stage).toHaveAttribute('data-tone',tone);
+    await expect(map.locator('.persistent-particle-stage')).toHaveCount(1);
+    if(initialCanvas) {
+      expect(await initialCanvas.evaluate(element=>element.isConnected)).toBe(true);
+      expect(await stage.locator('canvas').count()).toBe(1);
+    }
+  }
+});

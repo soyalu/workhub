@@ -376,3 +376,61 @@ test('M1.7 installed art files are decoded rather than using fallback icons', as
   }
   await page.screenshot({path:testInfo.outputPath('installed-art-hover-growth.png'),fullPage:true});
 });
+
+
+test('M1.7 painted landmark art is present or transparently falls back',async({page},testInfo)=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  const artManifest=await page.evaluate(async()=>{
+    const r=await fetch('/art/landmarks/manifest.json');
+    return r.ok && r.headers.get('content-type')?.includes('json');
+  });
+  await expect(map.locator('.animated-landmark')).toHaveCount(7);
+  if(artManifest) {
+    await expect(map.locator('.landmark-art-ready')).toHaveCount(7);
+    for(const theme of ['quest','project','message','capture','side','calendar','growth']){
+      const node=map.locator('.animated-landmark[data-theme="'+theme+'"]');
+      await expect(node).toHaveAttribute('data-art-ready','true');
+      const picture=node.locator('.landmark-painted-art img');
+      await expect.poll(()=>picture.evaluate(img=>
+        img instanceof HTMLImageElement && img.complete && img.naturalWidth===510 && img.naturalHeight===325
+      )).toBe(true);
+      await expect(node.locator('.landmark-scroll strong')).toBeVisible();
+    }
+  } else {
+    await expect(map.locator('.landmark-art-ready')).toHaveCount(0);
+  }
+  await page.screenshot({path:testInfo.outputPath('painted-landmarks-desktop.png'),fullPage:true});
+  await map.getByRole('link',{name:/^项目中心：/}).click();
+  await expect(page).toHaveURL(/\/projects$/);
+});
+
+test('M1.7 painted landmarks preserve mobile navigation and hit areas',async({page},testInfo)=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  await expect(map.locator('.animated-landmark')).toHaveCount(7);
+  const manifestAvailable=await page.evaluate(async()=>
+    (await fetch('/art/landmarks/manifest.json')).ok
+  );
+  if(manifestAvailable) {
+    await expect(map.locator('.landmark-art-ready')).toHaveCount(7);
+    for (const node of await map.locator('.landmark-art-ready').all()) {
+      const title=node.locator('.landmark-scroll strong');
+      await expect(title).toBeVisible();
+      await expect(node.locator('.landmark-scroll small')).toBeHidden();
+      const pos=await node.boundingBox();
+      const label=await title.boundingBox();
+      expect(pos).not.toBeNull();
+      expect(label).not.toBeNull();
+      // Titles must remain inside the active painted banner, not drift
+      // into the next column or out of the map.
+      expect(label!.x).toBeGreaterThanOrEqual(pos!.x + pos!.width*.47);
+      expect(label!.x+label!.width).toBeLessThanOrEqual(pos!.x+pos!.width+1);
+    }
+  }
+  await page.screenshot({path:testInfo.outputPath('painted-landmarks-mobile.png'),fullPage:true});
+  await map.getByRole('link',{name:/^快速录入：/}).click();
+  await expect(page).toHaveURL(/\/capture$/);
+});

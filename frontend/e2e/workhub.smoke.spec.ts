@@ -336,3 +336,13 @@ test('persistent Pixi stage keeps the same canvas across landmark hover', async 
     }
   }
 });
+
+
+test('成长徽章及宝箱保留未计算状态且图片缺失安全降级',async ({page})=>{
+  await page.goto('/');
+  const panel=page.getByRole('complementary',{name:'旅行者成长面板'});
+  await expect(panel.locator('.m16-stat')).toHaveCount(4);
+  await expect(panel.locator('[data-reward-status="locked"]')).toHaveCount(1);
+  await expect(panel.getByText('经验值尚未计算')).toBeVisible();
+  await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href','/growth');
+});

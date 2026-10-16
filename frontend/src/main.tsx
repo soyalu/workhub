@@ -7,6 +7,7 @@ import './styles/m15.css';
 import './styles/m16.css';
 import './styles/m16-frames.css';
 import './styles/m17-motion.css';
+import './styles/m17-art.css';
 
 const root = document.getElementById('root');
 

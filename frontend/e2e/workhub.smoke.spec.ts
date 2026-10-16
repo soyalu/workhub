@@ -231,3 +231,49 @@ test('人物背景素材缺失时明确提示，但项目导航仍可使用', as
   await page.getByRole('region', { name: '冒险地图导航' }).getByRole('link', { name: /项目中心/ }).click();
   await expect(page).toHaveURL(/\/projects$/);
 });
+
+
+test('M1.7 金色主线地标动画可关闭且仍可导航', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  const quest = page.getByRole('link', { name: /今日主线任务：/ });
+  const toggle = page.getByRole('button', { name: '地图动态效果' });
+  await expect(quest).toHaveAttribute('data-animation-enabled','true');
+  await expect(toggle).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('.quest-particle-aura')).toHaveCount(1);
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed','false');
+  await expect(page.locator('.quest-particle-aura')).toHaveCount(0);
+  await quest.click();
+  await expect(page).toHaveURL(/\/tasks$/);
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: '地图动态效果' })).toHaveAttribute('aria-pressed','false');
+});
+
+test('M1.7 自动尊重减少动态效果偏好', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion:'reduce' });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name:'地图动态效果' })).toBeDisabled();
+  await expect(page.getByRole('link', { name:/今日主线任务：/ })).toHaveAttribute('data-animation-enabled','false');
+  await expect(page.locator('.quest-particle-aura')).toHaveCount(0);
+});
+
+
+test('M1.7 hover snapshot keeps Pixi overlay non-interactive', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+  const quest = page.getByRole('link', { name:/今日主线任务：/ });
+  await quest.hover();
+  const aura = page.locator('.quest-particle-aura');
+  await expect(aura).toBeVisible();
+  await expect(aura).toHaveCSS('pointer-events','none');
+  await expect.poll(async () => {
+    const hasCanvas = await aura.locator('canvas').count();
+    const state = await aura.getAttribute('data-effect-state');
+    return hasCanvas > 0 || state === 'fallback';
+  }, { timeout:15000 }).toBeTruthy();
+  if (await aura.locator('canvas').count()) {
+    await expect(aura.locator('canvas')).toHaveCSS('pointer-events','none');
+  }
+  await page.screenshot({ path:testInfo.outputPath('quest-particle-hover.png'), fullPage:true });
+});

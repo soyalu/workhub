@@ -6,6 +6,7 @@ import './styles/global.css';
 import './styles/m15.css';
 import './styles/m16.css';
 import './styles/m16-frames.css';
+import './styles/m17-motion.css';
 
 const root = document.getElementById('root');
 

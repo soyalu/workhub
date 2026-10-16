@@ -10,7 +10,7 @@
 }
 .app-sidebar .brand-lockup {
   position:relative;
-  gap:3px;
+  gap:11px;
   min-height:80px;
   padding:4px 3px 14px;
 }
@@ -63,10 +63,10 @@
   isolation:isolate;
   width:100%;
   min-height:50px;
-  padding:9px 11px 9px 18px;
+  padding:9px 11px 9px 20px;
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:26px;
   background:transparent;
   border:0;
   border-radius:0;
@@ -96,7 +96,7 @@
   z-index:2;
   font-family:var(--wh-font-display);
   font-size:14px;
-  font-weight:600;
+  font-weight:500;
   letter-spacing:.1px;
   line-height:1.4;
   white-space:nowrap;
@@ -150,7 +150,7 @@
   .is-home-route .app-sidebar .brand-lockup {
     min-height:80px;
     padding:3px 1px 14px;
-    gap:2px;
+    gap:10px;
   }
   .is-home-route .app-sidebar .brand-compass-mark,
   .is-home-route .app-sidebar .brand-compass-svg {
@@ -162,7 +162,7 @@
   .is-home-route .app-sidebar .sidebar-navigation {gap:2px;}
   .is-home-route .app-sidebar .sidebar-link {
     min-height:50px;
-    padding:9px 9px 9px 16px;
+    padding:9px 9px 9px 20px;
   }
 }
 @media (max-width:900px) {

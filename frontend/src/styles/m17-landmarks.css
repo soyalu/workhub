@@ -83,3 +83,24 @@
 @media (prefers-reduced-motion:reduce){
   .adventure-dashboard .landmark-painted-art{transition:none!important}
 }
+
+
+/* Narrow phone landmark typography: keep the painted crest unobstructed.
+   Show titles only in two-column mode; full descriptions remain accessible
+   through the semantic link aria-label and on larger screens. */
+@media (max-width:620px) {
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-painted-art {
+    left:0; width:100%; top:-25px; height:106px;
+  }
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll {
+    left:51%; width:45%; top:15px; height:28px; gap:0;
+    justify-content:center;
+  }
+  .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll strong {
+    font-size:10px; line-height:1.2;
+    letter-spacing:-.18px; text-shadow:0 1px 3px #061326;
+  }
+  .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll small {
+    display:none;
+  }
+}

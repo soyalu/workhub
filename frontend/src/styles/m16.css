@@ -1,0 +1,265 @@
+/**
+ * WorkHub M1.6 / T04–T06: character-scene artwork & growth panel.
+ * Scoped to the home companion. Other pages still use the M1 design system.
+ * Crucial: the traveler is a single opaque landscape WebP—not a masked,
+ * feathered, transparent character composited in the browser.
+ */
+.adventure-dashboard .m16-traveler-panel {
+  position: relative;
+  background:
+    linear-gradient(160deg,#132840,#0b172b 72%),
+    #102038;
+  border: 2px solid #b38a4e;
+  box-shadow: inset 0 0 0 1px #f3d59b83, 0 0 0 1px #594225;
+  gap: 4px;
+}
+.adventure-dashboard .m16-traveler-panel::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid #c39a5745;
+  pointer-events: none;
+  z-index: 8;
+}
+.adventure-dashboard .m16-traveler-panel .m16-hero-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 0 0 58%;
+  height: 58%;
+  min-height: 0;
+  overflow: hidden;
+  text-align: left;
+}
+.adventure-dashboard .m16-traveler-panel .m16-character-scene {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 216px;
+  height: auto;
+  overflow: hidden;
+  border: 2px solid #d7ae6c;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #fff2d097, 0 2px 10px #071124bb;
+  background: #254665;
+}
+.adventure-dashboard .m16-character-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 1px solid #fff0c16b;
+  border-radius: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 22px #172f4c72;
+}
+.adventure-dashboard .m16-scene-image-clip {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+}
+.adventure-dashboard .traveler-scene-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+  border: 0;
+  border-radius: 0;
+  opacity: 1;
+  background: transparent;
+  filter: none;
+  clip-path: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  transform: none;
+}
+.adventure-dashboard .m16-scene-image-clip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,#07172b63 0%,transparent 28%,transparent 75%,#101b3480 100%);
+}
+.adventure-dashboard .m16-scene-heading {
+  position: absolute;
+  z-index: 3;
+  top: 9px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #fff3d2;
+  text-shadow: 0 2px 9px #071c32;
+}
+.adventure-dashboard .m16-scene-heading svg {
+  flex: 0 0 auto;
+  color: #ffcf70;
+  filter: drop-shadow(0 0 5px #ffbd50);
+}
+.adventure-dashboard .m16-scene-heading span { display:flex; flex-direction: column; gap: 3px; }
+.adventure-dashboard .m16-scene-heading strong {
+  font: 700 15px var(--wh-font-display);
+  letter-spacing: .4px;
+}
+.adventure-dashboard .m16-scene-heading small { font-size: 9px; color: #e9e6df; }
+.adventure-dashboard .m16-scene-quote {
+  position: absolute;
+  right: 8px;
+  bottom: 11px;
+  z-index: 3;
+  max-width: 55%;
+  padding: 8px 11px;
+  font: 700 11px/1.5 var(--wh-font-display);
+  background: linear-gradient(115deg,#fff9e7f2,#ebd5adf2);
+  border: 1px solid #b38b54;
+  border-radius: 2px 7px 3px 7px;
+  box-shadow: 0 5px 12px #08193388, inset 0 0 0 1px #fdf2d2;
+  color: #6d4c2b;
+}
+.adventure-dashboard .m16-scene-corner {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  z-index: 5;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg, #ffedbb 0 18%, #c18b42 20% 35%, transparent 38%);
+  filter: drop-shadow(0 1px 2px #38220f);
+}
+.adventure-dashboard .m16-scene-corner.top-left { top: -2px; left: -2px; }
+.adventure-dashboard .m16-scene-corner.top-right { top: -2px; right: -2px; transform: rotate(90deg); }
+.adventure-dashboard .m16-scene-corner.bottom-right { bottom: -2px; right: -2px; transform: rotate(180deg); }
+.adventure-dashboard .m16-scene-corner.bottom-left { bottom: -2px; left: -2px; transform: rotate(270deg); }
+.adventure-dashboard .m16-scene-error {
+  position:absolute;inset:auto 8px 40%;z-index:6;
+  padding:12px;font-size:12px;line-height:1.5;
+  color:#614622;background:#fff7dfef;border:2px solid #cda35e;
+}
+.adventure-dashboard .m16-level-row {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  flex:0 0 auto;
+  border-bottom: 1px solid #4f66824d;
+  color:#f1d8a2;
+  padding:0 3px 3px;
+}
+.adventure-dashboard .m16-level-number {
+  font: 700 23px Georgia,serif;
+  text-shadow: 0 0 9px #e4bb7559;
+}
+.adventure-dashboard .m16-level-meta {font-size:10px;color:#bbc4cf;}
+.adventure-dashboard .m16-hero-identity .progress-meter-track {
+  height:11px;
+  flex:0 0 auto;
+  background: #060e1e;
+  border: 1px solid #9e7741;
+  box-shadow: inset 0 2px 5px #0008, 0 0 0 1px #1f3e5c;
+}
+.adventure-dashboard .m16-hero-identity .progress-meter-track span {
+  background:linear-gradient(90deg,#4d9fea,#74e0fe);
+  box-shadow: 0 0 7px #39bce9;
+}
+.adventure-dashboard .m16-stat-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:3px;
+  flex:0 0 auto;
+  margin:5px 0 0;
+  padding:3px 0 6px;
+  border-top:1px solid #bf945241;
+  border-bottom:1px solid #bf945241;
+}
+.adventure-dashboard .m16-stat-grid .m16-stat {
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  min-width:0; padding:3px 0;
+  border:0; background:transparent;
+  text-align:center;
+}
+.adventure-dashboard .m16-stat-ring {
+  width:42px;height:42px;
+  display:grid;place-items:center;border-radius:50%;
+  background:radial-gradient(circle at 35% 25%,#2b6087 0%,#091c36 74%);
+  border:2px solid var(--stat-color,#4ccef0);
+  box-shadow:inset 0 0 0 3px #16324c,0 0 9px var(--stat-glow,#2baddd66);
+  color:var(--stat-color,#6bddf9);
+}
+.adventure-dashboard .m16-stat-energy { --stat-color:#51d5fd; --stat-glow:#2baddd66; }
+.adventure-dashboard .m16-stat-streak { --stat-color:#fbb260; --stat-glow:#f19c506a; }
+.adventure-dashboard .m16-stat-weekly { --stat-color:#77e6c7; --stat-glow:#5bddaf55; }
+.adventure-dashboard .m16-stat-achievement { --stat-color:#f1d072; --stat-glow:#dcb86b55; }
+.adventure-dashboard .m16-stat strong {font-size:14px;line-height:1;color:#f7f1df;}
+.adventure-dashboard .m16-stat span:last-child {font-size:9px;color:#c0cedb;white-space:nowrap;}
+.adventure-dashboard .m16-quest-chain {
+  display:flex;flex-direction:column;justify-content:center;
+  flex:1 1 auto; min-height:0; padding:7px;
+  border:1px solid #796346;
+  border-radius:6px;
+  background:linear-gradient(130deg,#18314e,#0d1e36);
+  box-shadow:inset 0 0 0 1px #bf8a3e2c;
+}
+.adventure-dashboard .m16-chain-heading {border-bottom:1px solid #82694750;padding-bottom:5px;}
+.adventure-dashboard .m16-chain-heading strong {font-size:11px;color:#f6daa1;}
+.adventure-dashboard .m16-chain-heading .quest-demo-flag {color:#b9bac3;font-weight:400;}
+.adventure-dashboard .m16-chain-rail {flex:1 1 auto;align-items:center;margin:4px 1px 0;min-height:50px;}
+.adventure-dashboard .m16-chain-rail::before {
+  height:3px;top:30%;
+  background:linear-gradient(90deg,#889ab0,#8b9caf 75%,#a9874d);
+  box-shadow:none;
+}
+.adventure-dashboard .m16-chain-step {justify-content:center;}
+.adventure-dashboard .m16-chain-orb {
+  width:26px;height:26px;
+  background:radial-gradient(circle at 30% 20%,#435a72,#14233c);
+  border:2px solid #8d9cad;
+  color:#edf4ff;
+  box-shadow:inset 0 0 0 2px #192d48;
+}
+.adventure-dashboard .m16-chain-reward {margin-top:0;}
+.adventure-dashboard .m16-reward-chest {
+  width:40px;height:35px;display:grid;place-items:center;
+  color:#ffe2a1;
+  border:2px solid #d5a34c;border-radius:8px;
+  background:linear-gradient(145deg,#bd842d,#553018);
+  box-shadow: 0 0 13px #e3a94b6e,inset 0 0 0 2px #f1c56b77;
+}
+.adventure-dashboard .m16-chain-footnote {
+  flex:0 0 auto;text-align:center;font-size:9px;line-height:1.5;color:#a2b0c2;
+  display:flex;justify-content:center;align-items:center;gap:3px;
+}
+.adventure-dashboard .m16-companion-link {
+  display:none;
+  align-items:center;justify-content:center;gap:4px;
+  color:#dec68e;font-size:11px;padding:4px;
+}
+@media(min-width:901px) and (max-height:850px) {
+  .adventure-dashboard .m16-traveler-panel .m16-hero-identity {flex-basis:56%;height:56%;}
+  .adventure-dashboard .m16-traveler-panel .m16-character-scene {min-height:205px;}
+  .adventure-dashboard .m16-traveler-panel .m16-chain-footnote {display:none;}
+}
+@media(min-width:901px) and (max-width:1179px) {
+  .adventure-dashboard .m16-traveler-panel .m16-hero-identity {
+    width:36%;flex:0 0 36%;height:330px;
+  }
+  .adventure-dashboard .m16-traveler-panel .m16-stat-grid {align-self:center;flex:1 1 235px;}
+  .adventure-dashboard .m16-traveler-panel .m16-quest-chain {width:100%;flex:1 1 100%;}
+}
+@media(max-width:900px) {
+  .adventure-dashboard .m16-traveler-panel .m16-hero-identity {
+    width:100%;height:375px;flex:0 0 375px;
+  }
+  .adventure-dashboard .m16-traveler-panel .m16-character-scene {min-height:290px;}
+  .adventure-dashboard .m16-traveler-panel .m16-quest-chain {min-height:115px;}
+}
+@media(max-width:520px) {
+  .adventure-dashboard .m16-traveler-panel .m16-hero-identity {height:340px;flex-basis:340px;}
+  .adventure-dashboard .m16-traveler-panel .m16-character-scene {min-height:265px;}
+  .adventure-dashboard .m16-scene-quote {max-width:57%;font-size:10px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .adventure-dashboard .m16-traveler-panel * {animation:none;transition:none;}
+}

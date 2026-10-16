@@ -20,21 +20,26 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
   const mapImage = map.locator('img.adventure-scene');
   await expect(mapImage).toHaveAttribute('src', '/art/home-map.webp');
   await expect.poll(() => mapImage.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(1200);
-  const traveler = page.locator('img.traveler-portrait');
+  const traveler = page.locator('img.traveler-scene-image');
   await expect(traveler).toBeVisible();
+  await expect(traveler).toHaveAttribute('src', '/art/backgrounds/traveler-original.webp');
+  await expect(traveler).toHaveCSS('object-fit', 'cover');
   const portraitPanel = page.locator('.adventure-hero .character-stage');
   await expect(portraitPanel).toBeVisible();
   const portraitBounds = await portraitPanel.boundingBox();
   expect(portraitBounds).not.toBeNull();
   expect(portraitBounds!.height).toBeGreaterThan(230);
   expect(portraitBounds!.width).toBeGreaterThan(240);
-  await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
+  await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBe(320);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(7);
   await expect(page.locator('.home-bottom .fantasy-card-header h2')).toHaveText([
     '信息收件箱', '工作日历', '每日工作日志', '近期成就与奖励',
   ]);
   await expect(page.locator('.home-quick-grid a')).toHaveCount(6);
+  await expect(page.locator('.home-bottom .ornate-parchment')).toHaveCount(4);
+  await expect(page.locator('.ornate-frame--map')).toHaveCount(1);
+  await expect(page.locator('.ornate-frame--companion')).toHaveCount(1);
   await expect(map.locator('a.map-node .landmark-emblem')).toHaveCount(7);
   await expect(map.locator('a.map-node .landmark-chevron')).toHaveCount(7);
   await expect(map.getByRole('link', { name: /支线任务/ })).toBeVisible();
@@ -172,7 +177,7 @@ test('1440 与 1280 首页人物立绘区域不能塌陷', async ({ page }) => {
     expect(rect).not.toBeNull();
     expect(rect!.height).toBeGreaterThan(230);
     expect(rect!.width).toBeGreaterThan(240);
-    await expect(stage.locator('img.traveler-portrait')).toBeVisible();
+    await expect(stage.locator('img.traveler-scene-image')).toBeVisible();
   }
 });
 
@@ -216,3 +221,13 @@ for (const { width, height } of [
     await page.screenshot({ path: testInfo.outputPath('viewport-fill-' + width + 'x' + height + '.png'), fullPage: true });
   });
 }
+
+
+test('人物背景素材缺失时明确提示，但项目导航仍可使用', async ({ page }) => {
+  await page.route('**/art/backgrounds/traveler-original.webp', (route) => route.fulfill({ status: 404, body: 'not found' }));
+  await page.goto('/');
+  await expect(page.getByRole('alert')).toContainText('人物场景素材加载失败');
+  await expect(page.locator('.m16-scene-missing')).toBeVisible();
+  await page.getByRole('region', { name: '冒险地图导航' }).getByRole('link', { name: /项目中心/ }).click();
+  await expect(page).toHaveURL(/\/projects$/);
+});

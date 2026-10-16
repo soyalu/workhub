@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
-  ListChecks, Trophy, Zap, ChartNoAxesCombined, Compass,
-  Flame, Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
+  ListChecks, Trophy, ChartNoAxesCombined, Compass,
+  Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
   ScrollText, Sun, type LucideIcon,
 } from 'lucide-react';
 import { FantasyCard } from '../../components/fantasy/FantasyCard';
-import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
+import { OrnateFrame } from '../../components/fantasy/OrnateFrame';
+import { TravelerPanel } from './TravelerPanel';
 import { StatusBadge } from '../../components/fantasy/StatusBadge';
 import { previewInbox, previewAgenda, mockDataNotice } from '../../mocks/preview';
 
@@ -69,39 +70,13 @@ export function HomePage() {
             </Link>
           ))}
         </div>
+        <OrnateFrame variant="map" />
       </section>
 
-      <aside className="hero-summary hero-summary-v2 adventure-hero" aria-label="旅行者成长面板">
-        <div className="hero-identity hero-identity-art">
-          <div className="character-stage">
-            <div className="character-title"><span className="character-sun" aria-hidden="true">✺</span><div><strong>你好，旅行者</strong><small>踏上今天的冒险旅程</small></div></div>
-            <img className="traveler-portrait" src="/art/traveler.webp" alt="蓝色斗篷的奇幻旅行者立绘" onError={event => { event.currentTarget.hidden = true; }}/>
-            <div className="character-quote">工作是通往更大世界的修行。</div>
-          </div>
-          <div className="hero-level"><strong>Lv. —</strong><small>经验值待接入 · 未计算</small></div>
-          <ProgressMeter value={0} label="尚未启用的成长经验" tone="blue"/>
-        </div>
-        <div className="hero-stat-grid" aria-label="成长指标尚未接入真实数据">
-          <div><Zap size={22}/><strong>—</strong><span>今日能量</span></div>
-          <div><Flame size={22}/><strong>—</strong><span>连续记录</span></div>
-          <div><ChartNoAxesCombined size={22}/><strong>—</strong><span>本周进度</span></div>
-          <div><Trophy size={22}/><strong>—</strong><span>成就徽章</span></div>
-        </div>
-        <div className="quest-chain">
-          <div className="quest-chain-heading"><ListChecks size={16}/><strong>今日任务链 <small className="quest-demo-flag">示意</small></strong><Link to="/tasks">查看全部 <ChevronRight size={13}/></Link></div>
-          <div className="quest-chain-rail" aria-label="阶段示意，不代表实际完成">
-            {['规划','执行','复盘','成长'].map((step,i)=><div key={step} className="quest-chain-step">
-              <span className={i===0?'quest-chain-orb is-start':'quest-chain-orb'}>{i+1}</span>
-              <small>{step}</small>
-            </div>)}
-            <Link className="quest-chain-reward" to="/growth" aria-label="查看尚未解锁的成长奖励"><Gift size={32}/><small>奖励</small></Link>
-          </div>
-          <p className="quest-chain-note">演示阶段图，未关联实际任务完成记录</p>
-        </div>
-      </aside>
+      <TravelerPanel />
 
       <section className="home-bottom" aria-label="首页工作摘要">
-        <FantasyCard title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>
+        <FantasyCard ornamented title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>
           <div className="home-inbox-list">
             {previewInbox.map(item=><div className="home-inbox-row" key={item.id}>
               <span className={'inbox-row-icon inbox-' + item.tone} aria-hidden="true"><Bell size={15}/></span>
@@ -109,14 +84,14 @@ export function HomePage() {
             </div>)}
           </div>
         </FantasyCard>
-        <FantasyCard title="工作日历" icon={CalendarDays} action={<Link to="/calendar" className="text-link">查看日历 →</Link>}>
+        <FantasyCard ornamented title="工作日历" icon={CalendarDays} action={<Link to="/calendar" className="text-link">查看日历 →</Link>}>
           <div className="home-calendar-heading"><strong>{new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric',weekday:'long'}).format(new Date())}</strong><StatusBadge tone="muted">演示日程</StatusBadge></div>
           <div className="home-agenda">{previewAgenda.map(item=><div className="home-agenda-row" key={item.id}>
             <span>{item.time}</span><i className={'agenda-dot agenda-' + item.tone} aria-hidden="true"/>
             <div><strong>{item.title}</strong><small>示例安排 · 未核实</small></div>
           </div>)}</div>
         </FantasyCard>
-        <FantasyCard title="每日工作日志" icon={BookOpenText} action={<Link to="/journal" className="text-link">去记录 →</Link>}>
+        <FantasyCard ornamented title="每日工作日志" icon={BookOpenText} action={<Link to="/journal" className="text-link">去记录 →</Link>}>
           <div className="journal-preview-placeholder">记录今天的工作、收获与待解决的问题……<small>自动生成与确认将在 M3 实现</small></div>
           <div className="home-quick-heading"><Feather size={14}/> 快速录入</div>
           <div className="home-quick-grid">
@@ -128,7 +103,7 @@ export function HomePage() {
             <Link to="/capture?kind=material"><FileText size={14}/> 记材料</Link>
           </div>
         </FantasyCard>
-        <FantasyCard title="近期成就与奖励" icon={Trophy} action={<Link to="/growth" className="text-link">查看全部 →</Link>}>
+        <FantasyCard ornamented title="近期成就与奖励" icon={Trophy} action={<Link to="/growth" className="text-link">查看全部 →</Link>}>
           <div className="home-achievement-grid">{achievements.map(({icon: Icon,title})=><div className="home-achievement" key={title}>
             <span aria-hidden="true"><Icon size={22}/></span><strong>{title}</strong><small>待解锁</small>
           </div>)}</div>

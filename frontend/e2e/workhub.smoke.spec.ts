@@ -37,6 +37,9 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
     '信息收件箱', '工作日历', '每日工作日志', '近期成就与奖励',
   ]);
   await expect(page.locator('.home-quick-grid a')).toHaveCount(6);
+  await expect(page.locator('.home-bottom .ornate-parchment')).toHaveCount(4);
+  await expect(page.locator('.ornate-frame--map')).toHaveCount(1);
+  await expect(page.locator('.ornate-frame--companion')).toHaveCount(1);
   await expect(map.locator('a.map-node .landmark-emblem')).toHaveCount(7);
   await expect(map.locator('a.map-node .landmark-chevron')).toHaveCount(7);
   await expect(map.getByRole('link', { name: /支线任务/ })).toBeVisible();

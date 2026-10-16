@@ -1,0 +1,52 @@
+/* M1.6 T07–T09 reusable frame system.
+   CSS is the engineering baseline; final decorative bitmap assets still
+   require separate art review. All overlays ignore pointer events. */
+.ornate-frame {
+  position:absolute;
+  inset:3px;
+  z-index:10;
+  pointer-events:none;
+  border:1px solid var(--frame-light,#e4c18b);
+  box-shadow:inset 0 0 0 1px var(--frame-mid,#916630),inset 0 0 0 3px #fff1be28;
+  border-radius:inherit;
+}
+.ornate-frame::before,.ornate-frame::after {
+  content:""; position:absolute;
+  left:22px; right:22px; height:1px;
+  background:linear-gradient(90deg,transparent,#f8dba1 17%,#b48342 50%,#f8dba1 83%,transparent);
+  opacity:.8;
+}
+.ornate-frame::before{top:2px}
+.ornate-frame::after{bottom:2px}
+.ornate-corner {
+  position:absolute; width:25px; height:25px;
+  background:
+    radial-gradient(circle at 7px 7px,#fae8bc 0 2px,#a77638 2.5px 4px,transparent 4.5px),
+    linear-gradient(135deg,#e8c17e 0 2px,#805925 3px 5px,transparent 5px),
+    linear-gradient(90deg,#e3b873 0 2px,transparent 2px);
+  filter:drop-shadow(0 1px 1px #3d241a90);
+}
+.ornate-corner--tl{top:-2px;left:-2px}
+.ornate-corner--tr{top:-2px;right:-2px;transform:rotate(90deg)}
+.ornate-corner--br{bottom:-2px;right:-2px;transform:rotate(180deg)}
+.ornate-corner--bl{bottom:-2px;left:-2px;transform:rotate(270deg)}
+.ornate-frame--map {--frame-light:#e9c787;--frame-mid:#69451b;}
+.ornate-frame--companion {--frame-light:#f1d495;--frame-mid:#674d2b;}
+.ornate-frame--parchment {--frame-light:#cfa86d;--frame-mid:#ead1a3;inset:3px;border-width:1px;opacity:.9}
+.ornate-frame--parchment .ornate-corner{width:18px;height:18px;background-size:72% 72%,90% 90%,100% 100%;}
+.ornate-parchment{position:relative;isolation:isolate;overflow:hidden}
+.ornate-parchment .fantasy-card-header,.ornate-parchment .fantasy-card-body{position:relative;z-index:1}
+.ornate-parchment .ornate-section-heading{display:flex;align-items:center;gap:6px}
+.ornate-section-heading h2{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.ornate-heading-crest {
+  display:inline-grid;place-items:center;flex:0 0 24px;
+  width:24px;height:24px;
+  color:#695029;
+  border:1px solid #c29856;border-radius:5px;
+  background:radial-gradient(circle at 25% 17%,#fffbdf,#e6c999);
+  box-shadow:inset 0 0 0 1px #fff6d7;
+}
+.gold-divider{display:block;flex:1 1 auto;min-width:4px;height:1px;
+  background:linear-gradient(90deg,#b99453aa,transparent);pointer-events:none}
+.ornate-parchment .text-link{position:relative;z-index:3;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.ornate-frame *{animation:none}}

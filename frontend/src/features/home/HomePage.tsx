@@ -7,6 +7,7 @@ import {
   ScrollText, Sun, type LucideIcon,
 } from 'lucide-react';
 import { FantasyCard } from '../../components/fantasy/FantasyCard';
+import { OrnateFrame } from '../../components/fantasy/OrnateFrame';
 import { TravelerPanel } from './TravelerPanel';
 import { StatusBadge } from '../../components/fantasy/StatusBadge';
 import { previewInbox, previewAgenda, mockDataNotice } from '../../mocks/preview';
@@ -69,12 +70,13 @@ export function HomePage() {
             </Link>
           ))}
         </div>
+        <OrnateFrame variant="map" />
       </section>
 
       <TravelerPanel />
 
       <section className="home-bottom" aria-label="首页工作摘要">
-        <FantasyCard title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>
+        <FantasyCard ornamented title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>
           <div className="home-inbox-list">
             {previewInbox.map(item=><div className="home-inbox-row" key={item.id}>
               <span className={'inbox-row-icon inbox-' + item.tone} aria-hidden="true"><Bell size={15}/></span>
@@ -82,14 +84,14 @@ export function HomePage() {
             </div>)}
           </div>
         </FantasyCard>
-        <FantasyCard title="工作日历" icon={CalendarDays} action={<Link to="/calendar" className="text-link">查看日历 →</Link>}>
+        <FantasyCard ornamented title="工作日历" icon={CalendarDays} action={<Link to="/calendar" className="text-link">查看日历 →</Link>}>
           <div className="home-calendar-heading"><strong>{new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric',weekday:'long'}).format(new Date())}</strong><StatusBadge tone="muted">演示日程</StatusBadge></div>
           <div className="home-agenda">{previewAgenda.map(item=><div className="home-agenda-row" key={item.id}>
             <span>{item.time}</span><i className={'agenda-dot agenda-' + item.tone} aria-hidden="true"/>
             <div><strong>{item.title}</strong><small>示例安排 · 未核实</small></div>
           </div>)}</div>
         </FantasyCard>
-        <FantasyCard title="每日工作日志" icon={BookOpenText} action={<Link to="/journal" className="text-link">去记录 →</Link>}>
+        <FantasyCard ornamented title="每日工作日志" icon={BookOpenText} action={<Link to="/journal" className="text-link">去记录 →</Link>}>
           <div className="journal-preview-placeholder">记录今天的工作、收获与待解决的问题……<small>自动生成与确认将在 M3 实现</small></div>
           <div className="home-quick-heading"><Feather size={14}/> 快速录入</div>
           <div className="home-quick-grid">
@@ -101,7 +103,7 @@ export function HomePage() {
             <Link to="/capture?kind=material"><FileText size={14}/> 记材料</Link>
           </div>
         </FantasyCard>
-        <FantasyCard title="近期成就与奖励" icon={Trophy} action={<Link to="/growth" className="text-link">查看全部 →</Link>}>
+        <FantasyCard ornamented title="近期成就与奖励" icon={Trophy} action={<Link to="/growth" className="text-link">查看全部 →</Link>}>
           <div className="home-achievement-grid">{achievements.map(({icon: Icon,title})=><div className="home-achievement" key={title}>
             <span aria-hidden="true"><Icon size={22}/></span><strong>{title}</strong><small>待解锁</small>
           </div>)}</div>

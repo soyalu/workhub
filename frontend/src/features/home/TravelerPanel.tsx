@@ -6,6 +6,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
+import { OrnateFrame } from '../../components/fantasy/OrnateFrame';
 
 const stageLabels = ['规划', '执行', '复盘', '成长'] as const;
 
@@ -86,6 +87,7 @@ export function TravelerPanel() {
         <div className="m16-chain-footnote"><Sparkles size={12} aria-hidden="true"/>真实记录确认后开启成长任务链</div>
       </section>
       <Link className="m16-companion-link" to="/growth"><BookOpenCheck size={14}/> 查看成长档案 <ArrowUpRight size={13}/></Link>
+      <OrnateFrame variant="companion" />
     </aside>
   );
 }

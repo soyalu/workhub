@@ -1,15 +1,15 @@
-/* M1.7: only the golden main quest has dynamic feedback. */
-.adventure-dashboard .animated-quest-landmark { isolation: isolate; }
-.adventure-dashboard .animated-quest-landmark .quest-particle-aura {
+/* M1.7: shared Motion feedback and at most one active Pixi emitter. */
+.adventure-dashboard .animated-landmark { isolation: isolate; }
+.adventure-dashboard .animated-landmark .quest-particle-aura {
   position: absolute; left: -38px; top: -29px; width: 190px; height: 116px;
   z-index: 0; pointer-events: none !important; overflow: visible;
 }
-.adventure-dashboard .animated-quest-landmark .quest-particle-aura canvas {
+.adventure-dashboard .animated-landmark .quest-particle-aura canvas {
   width:190px;height:116px;display:block;pointer-events:none !important;
 }
-.adventure-dashboard .animated-quest-landmark .landmark-scroll { z-index:1; position:relative; }
-.adventure-dashboard .animated-quest-landmark .landmark-emblem { z-index:2; }
-.adventure-dashboard .animated-quest-landmark .is-canvas-fallback::before {
+.adventure-dashboard .animated-landmark .landmark-scroll { z-index:1; position:relative; }
+.adventure-dashboard .animated-landmark .landmark-emblem { z-index:2; }
+.adventure-dashboard .animated-landmark .is-canvas-fallback::before {
   content:'';position:absolute;left:24px;top:22px;width:65px;height:65px;
   border-radius:50%;background:radial-gradient(circle,#ffdc7677,transparent 72%);
 }
@@ -20,10 +20,10 @@
 .adventure-dashboard .effects-toggle:focus-visible {outline:2px solid #12527f;outline-offset:3px}
 .adventure-dashboard .effects-toggle:disabled {opacity:.66;cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){
-  .adventure-dashboard .animated-quest-landmark,
-  .adventure-dashboard .animated-quest-landmark:hover{transition:none!important;animation:none!important}
-  .adventure-dashboard .animated-quest-landmark .landmark-scroll,
-  .adventure-dashboard .animated-quest-landmark .landmark-emblem{transition:none!important}
+  .adventure-dashboard .animated-landmark,
+  .adventure-dashboard .animated-landmark:hover{transition:none!important;animation:none!important}
+  .adventure-dashboard .animated-landmark .landmark-scroll,
+  .adventure-dashboard .animated-landmark .landmark-emblem{transition:none!important}
 }
 
 /* Transparent, full-map node wrapper must never steal clicks from controls.
@@ -36,4 +36,15 @@
   pointer-events: auto;
   position: relative;
   z-index: 6;
+}
+
+/* Different magic hues share a single CSS fallback and particle component. */
+.adventure-dashboard .landmark-project { --particle-light:#5ab8ff6e; }
+.adventure-dashboard .landmark-message { --particle-light:#fc7c806e; }
+.adventure-dashboard .landmark-calendar { --particle-light:#ff9c696e; }
+.adventure-dashboard .landmark-capture { --particle-light:#b281f66e; }
+.adventure-dashboard .landmark-side { --particle-light:#deb17a6e; }
+.adventure-dashboard .landmark-growth { --particle-light:#51d6ec6e; }
+.adventure-dashboard .animated-landmark .is-canvas-fallback::before {
+  background:radial-gradient(circle,var(--particle-light,#ffdc7677),transparent 72%);
 }

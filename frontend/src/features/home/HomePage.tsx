@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'motion/react';
-import { AnimatedQuestLandmark } from './AnimatedQuestLandmark';
+import { AnimatedLandmark, type LandmarkTheme } from './AnimatedLandmark';
 import {
-  BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
+  BookOpenText, CalendarDays, Feather, FolderKanban, Inbox,
   ListChecks, Trophy, ChartNoAxesCombined, Compass,
   Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
   ScrollText, Sun, type LucideIcon,
@@ -20,7 +20,7 @@ type Landmark = {
   to: string;
   icon: LucideIcon;
   location: string;
-  theme: 'quest' | 'project' | 'message' | 'calendar' | 'capture' | 'side' | 'growth';
+  theme: LandmarkTheme;
 };
 
 const landmarks: Landmark[] = [
@@ -43,6 +43,7 @@ const achievements = [
 export function HomePage() {
   const [sceneStatus, setSceneStatus] = useState<'loading' | 'ready' | 'missing'>('loading');
   const reducedMotion = useReducedMotion();
+  const [activeLandmark, setActiveLandmark] = useState<LandmarkTheme | null>(null);
   const [effectsOn, setEffectsOn] = useState(() => {
     try { return window.localStorage.getItem('workhub.effects') !== 'off'; }
     catch { return true; }
@@ -78,17 +79,19 @@ export function HomePage() {
           <path d="M210 285 C160 365 158 403 200 462 S347 499 465 446 S591 334 640 328 S782 382 818 456" />
         </svg>
         <div className="map-nodes">
-          {landmarks.map(({ label, description, to, icon: Icon, location, theme }) => (
-            theme === 'quest'
-              ? <AnimatedQuestLandmark key={to} enabled={Boolean(effectsEnabled)}/>
-              : <Link className={'map-node landmark landmark-' + theme + ' ' + location} key={to} to={to}
-                  aria-label={label + '：' + description}>
-                  <span className="landmark-emblem" aria-hidden="true"><Icon size={22} strokeWidth={1.8}/></span>
-                  <span className="landmark-scroll"><strong>{label}</strong><small>{description}</small></span>
-                  <ChevronRight className="landmark-chevron" size={15} aria-hidden="true"/>
-                </Link>
-          ))}
-        </div>
+          {landmarks.map(({ label, description, to, icon, location, theme }) => (
+            <AnimatedLandmark key={to} label={label} description={description} to={to}
+              icon={icon} location={location} theme={theme}
+              enabled={Boolean(effectsEnabled)}
+              active={activeLandmark === theme}
+              particleVisible={Boolean(effectsEnabled) && (activeLandmark === theme ||
+                (activeLandmark === null && theme === 'quest'))}
+              onActivate={setActiveLandmark}
+              onDeactivate={(previous) => {
+                setActiveLandmark((current) => current === previous ? null : current);
+              }}
+            />
+          ))}       </div>
         <OrnateFrame variant="map" />
       </section>
 

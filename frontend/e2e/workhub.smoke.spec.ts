@@ -434,3 +434,62 @@ test('M1.7 painted landmarks preserve mobile navigation and hit areas',async({pa
   await map.getByRole('link',{name:/^快速录入：/}).click();
   await expect(page).toHaveURL(/\/capture$/);
 });
+
+
+test('M1.7 per-landmark layout alignment keeps all painted text clear of emblems',async ({page},testInfo)=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  const desired = [
+    ['quest',21.1,46.8],['project',52.8,29.7],['message',83.0,32.0],
+    ['capture',65.1,57.2],['calendar',46.6,78.7],['side',21.1,79.4],['growth',83.4,78.9],
+  ] as const;
+  await expect(map.locator('.landmark-art-ready')).toHaveCount(7);
+  for(const [theme,x,y] of desired){
+    const node=map.locator('.animated-landmark[data-theme="'+theme+'"]');
+    const strong=node.locator('.landmark-scroll strong');
+    const subtitle=node.locator('.landmark-scroll small');
+    const sprite=node.locator('.landmark-painted-art');
+    await expect(strong).toBeVisible();
+    await expect(subtitle).toBeVisible();
+    const bounds=await node.boundingBox();
+    const title=await strong.boundingBox();
+    const sub=await subtitle.boundingBox();
+    const art=await sprite.boundingBox();
+    const scene=await map.boundingBox();
+    expect(bounds&&title&&sub&&art&&scene).toBeTruthy();
+    // Explicit map-scene percentages, independent of display resolution.
+    const measuredX=(bounds!.x+bounds!.width/2-scene!.x)/scene!.width*100;
+    const measuredY=(bounds!.y+bounds!.height/2-scene!.y)/scene!.height*100;
+    expect(measuredX).toBeGreaterThan(x-1.2);
+    expect(measuredX).toBeLessThan(x+1.2);
+    expect(measuredY).toBeGreaterThan(y-1.2);
+    expect(measuredY).toBeLessThan(y+1.2);
+    // Main text must start beyond the metal crest region, within the
+    // actual banner writing area rather than the glowing image alpha.
+    expect(title!.x).toBeGreaterThanOrEqual(art!.x+art!.width*.52);
+    expect(sub!.x).toBeGreaterThanOrEqual(art!.x+art!.width*.52);
+    expect(title!.x+title!.width).toBeLessThanOrEqual(art!.x+art!.width*.95);
+    expect(sub!.x+sub!.width).toBeLessThanOrEqual(art!.x+art!.width*.95);
+    expect(title!.y+title!.height).toBeLessThan(sub!.y+2);
+  }
+  await page.screenshot({path:testInfo.outputPath('calibrated-seven-landmarks-desktop.png'),fullPage:true});
+});
+
+test('M1.7 narrow-mobile calibrated landmarks keep titles in banner safe area', async ({page},testInfo)=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  const map=page.getByRole('region',{name:'冒险地图导航'});
+  await expect(map.locator('.landmark-art-ready')).toHaveCount(7);
+  for(const node of await map.locator('.landmark-art-ready').all()){
+    const title=node.locator('.landmark-scroll strong');
+    await expect(title).toBeVisible();
+    await expect(node.locator('.landmark-scroll small')).toBeHidden();
+    const outer=await node.boundingBox();
+    const text=await title.boundingBox();
+    expect(outer&&text).toBeTruthy();
+    expect(text!.x).toBeGreaterThanOrEqual(outer!.x+outer!.width*.49);
+    expect(text!.x+text!.width).toBeLessThanOrEqual(outer!.x+outer!.width+1);
+  }
+  await page.screenshot({path:testInfo.outputPath('calibrated-seven-landmarks-mobile.png'),fullPage:true});
+});

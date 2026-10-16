@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ChevronRight, type LucideIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { OptionalArt } from './OptionalArt';
+import { landmarkStyle } from './landmarkLayout';
 
 const ART_FILE = {
   quest:'main-quest-gold.webp',
@@ -37,6 +38,7 @@ export function AnimatedLandmark({
   const [paintedReady,setPaintedReady] = useState(false);
   return (
     <Link to={to}
+      style={landmarkStyle(theme)}
       className={
         'map-node landmark landmark-' + theme + ' ' + location +
         ' animated-landmark' + (theme === 'quest' ? ' animated-quest-landmark' : '') +
@@ -60,7 +62,7 @@ export function AnimatedLandmark({
         <OptionalArt src={'/art/effects/'+ART_FILE[theme]} fallback={null}/>
       </motion.span>}
       <motion.span className="landmark-painted-art" aria-hidden="true"
-        animate={{ y: enabled && active ? -3 : 0, scale: enabled && active ? 1.045 : 1 }}
+        animate={{ y: enabled && active ? -2 : 0, scale: enabled && active ? 1.012 : 1 }}
         transition={enabled ? { type:'spring', stiffness:280, damping:23 } : { duration:0 }}>
         <img src={'/art/landmarks/combined/'+theme+'.webp'}
           alt="" draggable={false}
@@ -74,7 +76,7 @@ export function AnimatedLandmark({
         <Icon size={22} strokeWidth={1.8}/>
       </motion.span>
       <motion.span className="landmark-scroll"
-        animate={{ x: enabled && active ? 4 : 0 }}
+        animate={{ x: paintedReady ? 0 : enabled && active ? 4 : 0, y: paintedReady && enabled && active ? -2 : 0 }}
         transition={{ duration: enabled ? .18 : 0 }}>
         <strong>{label}</strong><small>{description}</small>
       </motion.span>

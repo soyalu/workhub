@@ -217,3 +217,13 @@ for (const { width, height } of [
     await page.screenshot({ path: testInfo.outputPath('viewport-fill-' + width + 'x' + height + '.png'), fullPage: true });
   });
 }
+
+
+test('人物背景素材缺失时明确提示，但项目导航仍可使用', async ({ page }) => {
+  await page.route('**/art/backgrounds/traveler-scene.webp', (route) => route.fulfill({ status: 404, body: 'not found' }));
+  await page.goto('/');
+  await expect(page.getByRole('alert')).toContainText('人物场景素材加载失败');
+  await expect(page.locator('.m16-scene-missing')).toBeVisible();
+  await page.getByRole('region', { name: '冒险地图导航' }).getByRole('link', { name: /项目中心/ }).click();
+  await expect(page).toHaveURL(/\/projects$/);
+});

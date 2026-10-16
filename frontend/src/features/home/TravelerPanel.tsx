@@ -18,7 +18,7 @@ const stats: Stat[] = [
 ];
 
 /**
- * The character scene is ONE opaque RGB WebP with its own fantasy scenery.
+ * The character scene is ONE opaque RGB WebP derived from the user's original fantasy picture including its original background.
  * Never place an alpha-cutout traveler over a CSS illustration background.
  * No synthetic progress or experience values are represented as actual work.
  */
@@ -30,7 +30,7 @@ export function TravelerPanel() {
         <div className={'character-stage m16-character-scene' + (artFailed ? ' m16-scene-missing' : '')}>
           <div className="m16-scene-image-clip">
             {!artFailed && <img
-              src="/art/backgrounds/traveler-scene.webp"
+              src="/art/backgrounds/traveler-original.webp"
               className="traveler-scene-image"
               alt="蓝色斗篷的旅行者与天空、魔法城堡组成的完整场景插画"
               draggable={false}
@@ -42,7 +42,7 @@ export function TravelerPanel() {
             <span><strong>你好，旅行者</strong><small>踏上今天的冒险旅程</small></span>
           </div>
           <div className="m16-scene-quote">工作是通往更大世界的修行。</div>
-          {artFailed && <div className="m16-scene-error" role="alert">人物场景素材加载失败：traveler-scene.webp</div>}
+          {artFailed && <div className="m16-scene-error" role="alert">人物场景素材加载失败：traveler-original.webp</div>}
           <div className="m16-scene-corner top-left" aria-hidden="true"/>
           <div className="m16-scene-corner top-right" aria-hidden="true"/>
           <div className="m16-scene-corner bottom-left" aria-hidden="true"/>

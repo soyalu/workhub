@@ -22,14 +22,15 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
   await expect.poll(() => mapImage.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(1200);
   const traveler = page.locator('img.traveler-scene-image');
   await expect(traveler).toBeVisible();
-  await expect(traveler).toHaveAttribute('src', '/art/backgrounds/traveler-scene.webp');
+  await expect(traveler).toHaveAttribute('src', '/art/backgrounds/traveler-original.webp');
+  await expect(traveler).toHaveCSS('object-fit', 'cover');
   const portraitPanel = page.locator('.adventure-hero .character-stage');
   await expect(portraitPanel).toBeVisible();
   const portraitBounds = await portraitPanel.boundingBox();
   expect(portraitBounds).not.toBeNull();
   expect(portraitBounds!.height).toBeGreaterThan(230);
   expect(portraitBounds!.width).toBeGreaterThan(240);
-  await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
+  await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBe(320);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(7);
   await expect(page.locator('.home-bottom .fantasy-card-header h2')).toHaveText([
@@ -220,7 +221,7 @@ for (const { width, height } of [
 
 
 test('人物背景素材缺失时明确提示，但项目导航仍可使用', async ({ page }) => {
-  await page.route('**/art/backgrounds/traveler-scene.webp', (route) => route.fulfill({ status: 404, body: 'not found' }));
+  await page.route('**/art/backgrounds/traveler-original.webp', (route) => route.fulfill({ status: 404, body: 'not found' }));
   await page.goto('/');
   await expect(page.getByRole('alert')).toContainText('人物场景素材加载失败');
   await expect(page.locator('.m16-scene-missing')).toBeVisible();

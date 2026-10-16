@@ -5,7 +5,7 @@ const assets = {
   'home-map.webp': { minBytes: 400_000, sha256: '08383fadef2541c435186604792a353ef549fb8aa3e5832f65ca8bfbc2671cfc' },
   'traveler.webp': { minBytes: 200_000, sha256: 'ca18c191aa87dde0f10b8d66ff6f8093ba674191a498ae6cb05fc04e04ddc613' },
   'sidebar-night.webp': { minBytes: 80_000, sha256: 'caf6bd6f64dd1969523ce4440ffcbb823dd660c5075d20251b93f3d2ad025367' },
-  'backgrounds/traveler-scene.webp': { minBytes: 70_000, gitBlobSha: 'ab4a5aca1ea8bbd984a9dee2464577f76082cfb9' },
+  'backgrounds/traveler-original.webp': { minBytes: 10_000, sha256: '62954149f11f7941496102ee1f8096cd9908bd3fbb12fcb636c58c4e7af221ec' },
 };
 let errors = 0;
 for (const [file, expected] of Object.entries(assets)) {

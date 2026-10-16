@@ -1,0 +1,85 @@
+/* M1.7: authoritative painted landmark art.
+   Dynamic text remains DOM. Complete art sprite avoids visible edge seams.
+   Separate emblems/banners are available in the source pack for future states.
+   Do not block the semantic React Router links or Pixi Canvas. */
+.adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready{
+  width: 204px; height: 78px; min-height:0; padding:0;
+  background:none; border:0; box-shadow:none;
+  overflow:visible; isolation:isolate;
+}
+.adventure-dashboard .map-node.landmark .landmark-painted-art{
+  display:block; position:absolute;
+  z-index:0; left:-9px; top:-33px; width:218px; height:140px;
+  pointer-events:none;
+}
+.adventure-dashboard .landmark-painted-art img{
+  display:block; width:100%; height:100%;
+  object-fit:contain; pointer-events:none; user-select:none;
+}
+.adventure-dashboard .map-node.landmark:not(.landmark-art-ready) .landmark-painted-art {
+  opacity:0; visibility:hidden;
+}
+.adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-emblem,
+.adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-chevron {
+  display:none;
+}
+.adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll{
+  position:absolute; z-index:3;
+  top:21px; left:90px; width:99px; height:43px;
+  display:flex; align-items:flex-start; justify-content:center;
+  flex-direction:column; gap:3px;
+  padding:0; border:0; border-radius:0; background:none;
+  box-shadow:none; overflow:visible;
+  pointer-events:none;
+}
+.adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll strong{
+  font:700 12px/1.1 var(--wh-font-display);
+  color:#ffedc4; white-space:nowrap;
+  text-shadow:0 1px 2px #08162b,0 0 5px #071527;
+}
+.adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll small{
+  font:10px/1.1 var(--wh-font-ui);
+  color:#d7e4f0; white-space:nowrap;
+  text-shadow:0 1px 3px #06172b;
+}
+.adventure-dashboard .map-node.landmark.landmark-art-ready:hover,
+.adventure-dashboard .map-node.landmark.landmark-art-ready:focus-visible{
+  filter:brightness(1.09) drop-shadow(0 0 5px #ffd583a0);
+}
+.adventure-dashboard .map-node.landmark.landmark-art-ready:focus-visible{
+  outline:2px solid #ffe6ac; outline-offset:5px;
+}
+
+@media (max-width:900px){
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready,
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready:hover{
+    position:relative; left:auto; top:auto;
+    width:100%; height:54px; padding:0; transform:none; filter:none;
+  }
+  .adventure-dashboard .adventure-map .map-nodes {
+    row-gap:15px;
+  }
+  .adventure-dashboard .adventure-map .map-node.landmark .landmark-painted-art {
+    left:-8px;top:-26px;width:calc(100% + 10px);height:108px;
+  }
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll{
+    left:43%;top:14px;width:56%;height:34px;gap:2px;
+  }
+  .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll strong{
+    font-size:clamp(9px,2.6vw,12px);
+  }
+  .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll small{
+    font-size:9px;display:block;
+  }
+}
+@media (max-width:620px) {
+  .adventure-dashboard .adventure-map .map-node.landmark .landmark-painted-art{
+    left:-9px;top:-25px;width:calc(100% + 12px);height:106px;
+  }
+  .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll{
+    left:44%;width:56%;top:13px;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .adventure-dashboard .landmark-painted-art{transition:none!important}
+}

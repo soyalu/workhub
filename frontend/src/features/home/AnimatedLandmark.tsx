@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { ChevronRight, type LucideIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { OptionalArt } from './OptionalArt';
@@ -33,16 +34,19 @@ export function AnimatedLandmark({
   label, description, to, icon: Icon, location, theme,
   enabled, active, onActivate, onDeactivate,
 }: AnimatedLandmarkProps) {
+  const [paintedReady,setPaintedReady] = useState(false);
   return (
     <Link to={to}
       className={
         'map-node landmark landmark-' + theme + ' ' + location +
         ' animated-landmark' + (theme === 'quest' ? ' animated-quest-landmark' : '') +
-        (enabled ? ' effect-enabled' : '')
+        (enabled ? ' effect-enabled' : '') +
+        (paintedReady ? ' landmark-art-ready' : '')
       }
       aria-label={label + '：' + description}
       data-theme={theme}
       data-animation-enabled={String(enabled)}
+      data-art-ready={String(paintedReady)}
       onMouseEnter={() => onActivate(theme)}
       onMouseLeave={() => onDeactivate(theme)}
       onFocus={() => onActivate(theme)}
@@ -55,6 +59,15 @@ export function AnimatedLandmark({
         transition={{duration:.42}}>
         <OptionalArt src={'/art/effects/'+ART_FILE[theme]} fallback={null}/>
       </motion.span>}
+      <motion.span className="landmark-painted-art" aria-hidden="true"
+        animate={{ y: enabled && active ? -3 : 0, scale: enabled && active ? 1.045 : 1 }}
+        transition={enabled ? { type:'spring', stiffness:280, damping:23 } : { duration:0 }}>
+        <img src={'/art/landmarks/combined/'+theme+'.webp'}
+          alt="" draggable={false}
+          onLoad={() => setPaintedReady(true)}
+          onError={() => setPaintedReady(false)}
+        />
+      </motion.span>
       <motion.span className="landmark-emblem" aria-hidden="true"
         animate={{ y: enabled && active ? -4 : 0, scale: enabled && active ? 1.09 : 1 }}
         transition={enabled ? { type: 'spring', stiffness: 280, damping: 22 } : { duration: 0 }}>

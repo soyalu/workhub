@@ -31,10 +31,12 @@ export const previewInbox = [
   { id: 'i1', title: '项目交流纪要', summary: '演示：下周交流计划与材料安排', tone: 'blue' },
   { id: 'i2', title: '材料更新提示', summary: '演示：技术方案仍有待确认问题', tone: 'orange' },
   { id: 'i3', title: '工作总结提醒', summary: '演示：整理今日工作记录草稿', tone: 'purple' },
+  { id: 'i4', title: '系统通知', summary: '演示：周期性工作回顾待确认', tone: 'blue' },
 ] as const;
 
 export const previewAgenda = [
   { id: 'a1', time: '09:00', title: '项目交流', tone: 'blue' },
   { id: 'a2', time: '14:00', title: '材料编写', tone: 'green' },
   { id: 'a3', time: '16:30', title: '工作回顾', tone: 'orange' },
+  { id: 'a4', time: '17:30', title: '每日复盘', tone: 'blue' },
 ] as const;

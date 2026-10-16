@@ -42,6 +42,9 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
   await expect(page.locator('aside.app-sidebar nav.sidebar-navigation a')).toHaveCount(10);
   await expect(page.locator('.topbar')).toBeHidden();
   await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href', '/growth');
+  await expect(page.locator('.quest-chain-orb').first()).toHaveText('1');
+  await expect(page.locator('.home-inbox-row')).toHaveCount(4);
+  await expect(page.locator('.home-agenda-row')).toHaveCount(4);
   await expect(map.getByRole('link', { name: /项目中心/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
   await map.getByRole('link', { name: /项目中心/ }).click();

@@ -4,7 +4,7 @@ import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
   ListChecks, Trophy, Zap, ChartNoAxesCombined, Compass,
   Flame, Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
-  ScrollText, Check, Sun, type LucideIcon,
+  ScrollText, Sun, type LucideIcon,
 } from 'lucide-react';
 import { FantasyCard } from '../../components/fantasy/FantasyCard';
 import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
@@ -88,10 +88,10 @@ export function HomePage() {
           <div><Trophy size={22}/><strong>—</strong><span>成就徽章</span></div>
         </div>
         <div className="quest-chain">
-          <div className="quest-chain-heading"><ListChecks size={16}/><strong>今日任务链</strong><Link to="/tasks">查看全部 <ChevronRight size={13}/></Link></div>
+          <div className="quest-chain-heading"><ListChecks size={16}/><strong>今日任务链 <small className="quest-demo-flag">示意</small></strong><Link to="/tasks">查看全部 <ChevronRight size={13}/></Link></div>
           <div className="quest-chain-rail" aria-label="阶段示意，不代表实际完成">
             {['规划','执行','复盘','成长'].map((step,i)=><div key={step} className="quest-chain-step">
-              <span className={i===0?'quest-chain-orb is-start':'quest-chain-orb'}>{i===0?<Check size={14}/>:i+1}</span>
+              <span className={i===0?'quest-chain-orb is-start':'quest-chain-orb'}>{i+1}</span>
               <small>{step}</small>
             </div>)}
             <Link className="quest-chain-reward" to="/growth" aria-label="查看尚未解锁的成长奖励"><Gift size={32}/><small>奖励</small></Link>

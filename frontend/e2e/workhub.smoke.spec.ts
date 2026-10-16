@@ -560,7 +560,12 @@ test('M1.7 fantasy sidebar remains usable as a mobile drawer',async ({page},test
   await expect(sidebar.locator('.sidebar-link')).toHaveCount(10);
   await expect(sidebar.getByRole('link',{name:'主页 · 冒险地图'})).toHaveClass(/is-active/);
   await expect(sidebar.locator('.sidebar-active-ornament')).toHaveCount(1);
-  await page.screenshot({path:testInfo.outputPath('sidebar-brass-mobile.png'),fullPage:false});
+  // The drawer animates from offscreen: capture only after it has settled.
+  await expect.poll(async () => (await sidebar.boundingBox())?.x ?? -1000).toBeGreaterThanOrEqual(-1);
+  const mobileBounds=await sidebar.boundingBox();
+  expect(mobileBounds).not.toBeNull();
+  expect(mobileBounds!.width).toBeGreaterThanOrEqual(238);
+  await page.screenshot({path:testInfo.outputPath('sidebar-brass-mobile.png'),fullPage:false,animations:'disabled'});
   await sidebar.getByRole('link',{name:'项目中心'}).click();
   await expect(page).toHaveURL(/\/projects$/);
   await expect(sidebar).not.toHaveClass(/is-open/);

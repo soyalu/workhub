@@ -25,3 +25,8 @@
   .adventure-dashboard .animated-quest-landmark .landmark-scroll,
   .adventure-dashboard .animated-quest-landmark .landmark-emblem{transition:none!important}
 }
+
+/* Transparent, full-map node wrapper must never steal clicks from controls.
+   Only actual landmark links remain interactive. */
+.adventure-dashboard .map-nodes { pointer-events: none; }
+.adventure-dashboard .map-nodes .map-node { pointer-events: auto; }

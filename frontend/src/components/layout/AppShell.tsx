@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Bell, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
+import { Bell, Compass, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { navigation } from '../../app/navigation';
 import { checkHealth } from '../../lib/api';

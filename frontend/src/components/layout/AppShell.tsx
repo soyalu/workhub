@@ -3,6 +3,7 @@ import { Bell, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { navigation } from '../../app/navigation';
 import { CompassRoseMark } from './CompassRoseMark';
+import { SidebarActivePlaque } from './SidebarActivePlaque';
 import { checkHealth } from '../../lib/api';
 
 type ConnectionStatus = 'checking' | 'online' | 'offline';
@@ -37,8 +38,13 @@ export function AppShell() {
           {navigation.map(({ label, to, icon: Icon }) => (
             <NavLink key={to} to={to} end={to === '/'} onClick={() => setMenuOpen(false)}
               className={({ isActive }) => 'sidebar-link ' + (isActive ? 'is-active' : '')}>
-              <span className="nav-icon-wrap" aria-hidden="true"><Icon size={20} strokeWidth={1.85} /></span>
-              <span className="sidebar-link-label">{label}</span>
+              {({ isActive }) => (
+                <>
+                  {isActive && <SidebarActivePlaque />}
+                  <span className="nav-icon-wrap" aria-hidden="true"><Icon size={21} strokeWidth={1.75} /></span>
+                  <span className="sidebar-link-label">{label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>

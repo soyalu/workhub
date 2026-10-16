@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
-  ListChecks, Sparkles, Trophy, Zap, ChartNoAxesCombined, Compass,
+  ListChecks, Trophy, Zap, ChartNoAxesCombined, Compass,
   Flame, Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
   ScrollText, Check, Sun, type LucideIcon,
 } from 'lucide-react';

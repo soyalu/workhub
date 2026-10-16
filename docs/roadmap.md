@@ -35,3 +35,11 @@
 ## M5: Desktop and multiple devices
 - macOS Tauri shell, system notifications and global quick capture.
 - Authenticated NAS/mobile usage and optional AI assistance.
+
+## M1.5 Reference-aligned homepage (current branch)
+- [x] Restore the 7 original map destinations (main, project, inbox, quick input, calendar, side, growth) and 10 sidebar entries.
+- [x] Keep new side-quest and time-tracking routes honest placeholders without fake persistence.
+- [x] Scope full-screen desktop game layout to homepage, preserving other internal page layouts.
+- [x] Replace generic node badges with distinct shield/parchment landmark visual treatments and visible decorative adventure paths.
+- [x] Rework traveler visual proportion and staged reward chain; data remains uncomputed.
+- [ ] Compare final real-browser screenshots to the approved reference; obtain user visual signoff.

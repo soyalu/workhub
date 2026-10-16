@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
   }));
 });
 
-test('首页的冒险场景及六个功能入口可访问', async ({ page }, testInfo) => {
+test('首页的冒险场景及七个功能地标可访问', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: '今日 · 主线任务' })).toBeVisible();
@@ -24,13 +24,18 @@ test('首页的冒险场景及六个功能入口可访问', async ({ page }, tes
   await expect(traveler).toBeVisible();
   await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
-  await expect(map.locator('a.map-node')).toHaveCount(6);
+  await expect(map.locator('a.map-node')).toHaveCount(7);
   await expect(page.locator('.home-bottom .fantasy-card-header h2')).toHaveText([
     '信息收件箱', '工作日历', '每日工作日志', '近期成就与奖励',
   ]);
   await expect(page.locator('.home-quick-grid a')).toHaveCount(6);
-  await expect(map.locator('a.map-node .map-node-medallion')).toHaveCount(6);
-  await expect(map.locator('a.map-node .map-node-arrow')).toHaveCount(6);
+  await expect(map.locator('a.map-node .landmark-emblem')).toHaveCount(7);
+  await expect(map.locator('a.map-node .landmark-chevron')).toHaveCount(7);
+  await expect(map.getByRole('link', { name: /支线任务/ })).toBeVisible();
+  await expect(map.getByRole('link', { name: /信息收件箱/ })).toBeVisible();
+  await expect(page.locator('aside.app-sidebar nav.sidebar-navigation a')).toHaveCount(10);
+  await expect(page.locator('.topbar')).toBeHidden();
+  await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href', '/growth');
   await expect(map.getByRole('link', { name: /项目中心/ })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
   await map.getByRole('link', { name: /项目中心/ }).click();
@@ -60,7 +65,7 @@ test('手机屏幕可使用导航并看到真实输入入口', async ({ page }, 
   await page.goto('/');
   await expect(page.getByRole('button', { name: '打开导航' })).toBeVisible();
   const mobileMap = page.getByRole('region', { name: '冒险地图导航' });
-  await expect(mobileMap.locator('a.map-node')).toHaveCount(6);
+  await expect(mobileMap.locator('a.map-node')).toHaveCount(7);
   await expect(mobileMap.locator('a.map-node').first()).toHaveCSS('position', 'relative');
   for (const node of await mobileMap.locator('a.map-node').all()) {
     const bounds = await node.boundingBox();
@@ -90,7 +95,7 @@ for (const width of [1440, 1280, 1024, 900, 390]) {
     const mapRect = await map.boundingBox();
     expect(mapRect).not.toBeNull();
     const nodes = map.locator('a.map-node');
-    await expect(nodes).toHaveCount(6);
+    await expect(nodes).toHaveCount(7);
     for (const link of await nodes.all()) {
       await expect(link).toBeVisible();
       const rect = await link.boundingBox();
@@ -124,4 +129,26 @@ test('首页快速录入类别传递至录入页但不冒充已保存', async ({
   await expect(page).toHaveURL(/\/capture\?kind=meeting$/);
   await expect(page.getByText(/快捷入口：会议交流/)).toBeVisible();
   await expect(page.getByRole('button', { name: '预览输入（不保存）' })).toBeDisabled();
+});
+
+
+test('侧栏新增的支线任务与打卡工时均有明确页面而非无效链接', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('.sidebar-navigation').getByRole('link', { name: '支线任务' }).click();
+  await expect(page).toHaveURL(/\/side-quests$/);
+  await expect(page.getByRole('heading', { name: '支线任务' })).toBeVisible();
+  await page.locator('.sidebar-navigation').getByRole('link', { name: '打卡与工时' }).click();
+  await expect(page).toHaveURL(/\/time-tracking$/);
+  await expect(page.getByRole('heading', { name: '打卡与工时' })).toBeVisible();
+});
+
+test('首页七个地标各有独立目的地且图片与任务链分离', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  const map = page.getByRole('region', { name: '冒险地图导航' });
+  const anchors = await map.locator('a.landmark').evaluateAll(items => items.map(item => item.getAttribute('href')));
+  expect(anchors).toEqual(['/tasks','/projects','/inbox','/capture','/calendar','/side-quests','/growth']);
+  await expect(page.locator('.adventure-route')).toBeVisible();
+  await expect(page.locator('.quest-chain-step')).toHaveCount(4);
+  await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href', '/growth');
 });

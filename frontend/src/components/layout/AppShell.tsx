@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Bell, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
-import { NavLink, Outlet, Link } from 'react-router-dom';
+import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { navigation } from '../../app/navigation';
 import { checkHealth } from '../../lib/api';
 
@@ -8,6 +8,7 @@ type ConnectionStatus = 'checking' | 'online' | 'offline';
 
 export function AppShell() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const isHome = useLocation().pathname === '/';
   const [connection, setConnection] = useState<ConnectionStatus>('checking');
   useEffect(() => {
     let alive = true;
@@ -22,11 +23,11 @@ export function AppShell() {
   }).format(new Date());
 
   return (
-    <div className="app-layout">
+    <div className={"app-layout" + (isHome ? " is-home-route" : "")}>
       {menuOpen && <button type="button" className="sidebar-scrim" aria-label="关闭导航" onClick={() => setMenuOpen(false)} />}
       <aside className={'app-sidebar ' + (menuOpen ? 'is-open' : '')} aria-label="主导航">
         <div className="brand-lockup">
-          <span className="brand-emblem" aria-hidden="true">✥</span>
+          <Compass className="brand-emblem" aria-hidden="true" size={43} strokeWidth={1.4}/>
           <div><strong>WorkHub</strong><span>个人办公工作台</span></div>
           <button type="button" className="sidebar-close" aria-label="关闭导航" onClick={() => setMenuOpen(false)}><X size={18} /></button>
         </div>
@@ -61,7 +62,7 @@ export function AppShell() {
             <span className="preview-chip">M1 视觉基础</span>
           </div>
         </header>
-        <main id="main-content" className="page-content"><Outlet /></main>
+        <main id="main-content" className={"page-content" + (isHome ? " is-home-page" : "")}><Outlet /></main>
       </div>
     </div>
   );

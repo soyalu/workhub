@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from '../components/layout/AppShell';
 import { HomePage } from '../features/home/HomePage';
+import { SideQuestsPage } from '../features/sidequests/SideQuestsPage';
+import { TimeTrackingPage } from '../features/timetracking/TimeTrackingPage';
 import { TasksPage } from '../features/tasks/TasksPage';
 import { ProjectsPage } from '../features/projects/ProjectsPage';
 import { CalendarPage } from '../features/calendar/CalendarPage';
@@ -16,6 +18,8 @@ export function App() {
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
           <Route path="tasks" element={<TasksPage />} />
+          <Route path="side-quests" element={<SideQuestsPage />} />
+          <Route path="time-tracking" element={<TimeTrackingPage />} />
           <Route path="projects" element={<ProjectsPage />} />
           <Route path="calendar" element={<CalendarPage />} />
           <Route path="journal" element={<JournalPage />} />

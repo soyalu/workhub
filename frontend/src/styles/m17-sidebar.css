@@ -1,0 +1,111 @@
+/*
+ * M1.7 approved map design stays untouched.
+ * Sidebar-only styling: premium brass compass and carved active navigation.
+ * No decorative overlay intercepts clicks or keyboard focus.
+ */
+.app-sidebar { --nav-brass-light:#ffe9aa; --nav-brass-mid:#d7a755; --nav-brass-dark:#805722; }
+.app-sidebar .brand-lockup {
+  position:relative;gap:7px;min-height:78px;padding:5px 4px 13px;
+}
+.app-sidebar .brand-compass-mark {
+  flex:0 0 57px;width:57px;height:57px;display:grid;place-items:center;
+  position:relative;isolation:isolate;filter:drop-shadow(0 2px 3px #081221bb);
+}
+.app-sidebar .brand-compass-mark::before {
+  content:"";position:absolute;inset:9px;z-index:-1;border-radius:50%;
+  background:radial-gradient(circle,#f1c8792c 0%,#b8873735 32%,transparent 71%);
+  box-shadow:0 0 12px #f1bd6d2f;
+}
+.app-sidebar .brand-compass-svg {width:57px;height:57px;display:block;overflow:visible;}
+.app-sidebar .brand-lockup > div {min-width:0;}
+.app-sidebar .brand-lockup strong {
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:22px;line-height:1.05;letter-spacing:.05px;
+  color:#fff1cb;text-shadow:0 1px 2px #050e1a;
+}
+.app-sidebar .brand-lockup > div > span {
+  display:block;white-space:nowrap;letter-spacing:1.05px;
+  margin-top:6px;font-size:10px;color:#e4d3ae;opacity:1;
+}
+.app-sidebar .sidebar-navigation {row-gap:2px;}
+.app-sidebar .sidebar-link {
+  position:relative;isolation:isolate;min-height:48px;
+  width:100%;border:0;border-radius:3px;
+  display:flex;align-items:center;gap:9px;
+  padding:8px 13px 8px 15px;
+  color:#e9e8e0;background:transparent;
+  transition:color .17s ease,background-color .17s ease,filter .17s ease;
+}
+.app-sidebar .sidebar-link::before,
+.app-sidebar .sidebar-link::after {content:none;}
+.app-sidebar .nav-icon-wrap {
+  flex:0 0 24px;width:24px;height:27px;
+  display:inline-flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;color:#e5bd74;
+}
+.app-sidebar .nav-icon-wrap svg {
+  color:currentColor;stroke-width:1.85;
+  filter:drop-shadow(0 1px 1px #07111f);
+}
+.app-sidebar .sidebar-link-label {
+  position:relative;z-index:2;
+  font-size:13px;font-weight:500;letter-spacing:.05px;
+  line-height:1.4;white-space:nowrap;
+}
+.app-sidebar .sidebar-link:not(.is-active):hover {
+  color:#fff2d1;background:linear-gradient(90deg,#e0ad5422,transparent);
+}
+.app-sidebar .sidebar-link:not(.is-active):hover .nav-icon-wrap {color:#ffe1a0;}
+.app-sidebar .sidebar-link.is-active,
+.is-home-route .app-sidebar .sidebar-link.is-active {
+  color:#fff3ce;background:transparent;border:0;border-radius:0;
+  box-shadow:none;filter:drop-shadow(0 2px 5px #060e1f95) drop-shadow(0 0 5px #e9ba565e);
+}
+.app-sidebar .sidebar-link.is-active::before,
+.app-sidebar .sidebar-link.is-active::after {
+  content:"";display:block;position:absolute;pointer-events:none;
+  transition:none;
+}
+.app-sidebar .sidebar-link.is-active::before {
+  z-index:0;inset:0;
+  background:linear-gradient(155deg,#ffe5a6 0%,#d7a14c 19%,#8b5e2a 47%,#f9d58e 78%,#bb822d 100%);
+  clip-path:polygon(10px 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,10px 100%,0 50%);
+}
+.app-sidebar .sidebar-link.is-active::after {
+  z-index:1;inset:2px;
+  background:
+    linear-gradient(180deg,#f6dfab3d 0%,transparent 24%),
+    linear-gradient(96deg,#805925 0%,#73552e 45%,#4b3d30 86%,#43392c 100%);
+  clip-path:polygon(9px 0,calc(100% - 11px) 0,100% 50%,calc(100% - 11px) 100%,9px 100%,0 50%);
+  box-shadow:inset 0 0 0 1px #f5d99b70;
+}
+.app-sidebar .sidebar-link.is-active .nav-icon-wrap {
+  color:#fff0be;filter:drop-shadow(0 0 3px #ffdf8a9a);
+}
+.app-sidebar .sidebar-link.is-active .sidebar-link-label {
+  color:#fff4d5;font-weight:650;text-shadow:0 1px 2px #211407bb;
+}
+.app-sidebar .sidebar-link:focus-visible {
+  outline:2px solid #ffefbe;outline-offset:2px;z-index:3;
+}
+@media(min-width:901px) {
+  .is-home-route .app-sidebar .brand-lockup {
+    padding:3px 4px 14px;gap:5px;min-height:77px;
+  }
+  .is-home-route .app-sidebar .brand-compass-mark,
+  .is-home-route .app-sidebar .brand-compass-svg {
+    width:57px;height:57px;
+  }
+  .is-home-route .app-sidebar .brand-lockup strong {font-size:21px;}
+  .is-home-route .app-sidebar .sidebar-navigation {gap:2px;}
+  .is-home-route .app-sidebar .sidebar-link {
+    padding:8px 11px 8px 13px;min-height:49px;font-size:13px;
+  }
+}
+@media(max-width:900px) {
+  .app-sidebar .brand-lockup {padding:7px 8px 15px;}
+  .app-sidebar .sidebar-link {min-height:49px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .app-sidebar .sidebar-link {transition:none;}
+}

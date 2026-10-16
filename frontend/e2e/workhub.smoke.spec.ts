@@ -515,3 +515,49 @@ test('M1.7 banner text blocks align vertically with measured art centers',async 
     }
   }
 });
+
+
+test('M1.7 sidebar compass and carved active menu match reference without blocking navigation', async ({page},testInfo)=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  const sidebar=page.getByRole('complementary',{name:'主导航'});
+  const crest=sidebar.locator('.brand-compass-svg');
+  await expect(crest).toBeVisible();
+  await expect(sidebar.locator('.brand-emblem')).toHaveCount(0);
+  const mark=await crest.boundingBox();
+  expect(mark).not.toBeNull();
+  expect(mark!.width).toBeGreaterThanOrEqual(55);
+  expect(mark!.height).toBeGreaterThanOrEqual(55);
+  await expect(sidebar.locator('.nav-icon-wrap')).toHaveCount(10);
+  const active=sidebar.getByRole('link',{name:'主页 · 冒险地图'});
+  await expect(active).toHaveClass(/is-active/);
+  await expect(active).toHaveAttribute('aria-current','page');
+  await expect(active.locator('.sidebar-link-label')).toBeVisible();
+  const material=await active.evaluate(element=>({
+    outside:getComputedStyle(element,'::before').clipPath,
+    inside:getComputedStyle(element,'::after').clipPath,
+    backdrop:getComputedStyle(element,'::before').backgroundImage,
+  }));
+  expect(material.outside).toContain('polygon(');
+  expect(material.inside).toContain('polygon(');
+  expect(material.backdrop).toContain('linear-gradient(');
+  await page.screenshot({path:testInfo.outputPath('sidebar-brass-desktop.png'),fullPage:true});
+  await sidebar.getByRole('link',{name:'工作日历'}).click();
+  await expect(page).toHaveURL(/\/calendar$/);
+  await expect(sidebar.getByRole('link',{name:'工作日历'})).toHaveClass(/is-active/);
+  await expect(sidebar.locator('.sidebar-link.is-active')).toHaveCount(1);
+});
+
+test('M1.7 fantasy sidebar remains usable as a mobile drawer',async ({page},testInfo)=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  await page.getByRole('button',{name:'打开导航'}).click();
+  const sidebar=page.getByRole('complementary',{name:'主导航'});
+  await expect(sidebar.locator('.brand-compass-svg')).toBeVisible();
+  await expect(sidebar.locator('.sidebar-link')).toHaveCount(10);
+  await expect(sidebar.getByRole('link',{name:'主页 · 冒险地图'})).toHaveClass(/is-active/);
+  await page.screenshot({path:testInfo.outputPath('sidebar-brass-mobile.png'),fullPage:false});
+  await sidebar.getByRole('link',{name:'项目中心'}).click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(sidebar).not.toHaveClass(/is-open/);
+});

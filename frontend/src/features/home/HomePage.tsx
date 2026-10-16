@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
-  ListChecks, Trophy, Zap, ChartNoAxesCombined, Compass,
-  Flame, Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
+  ListChecks, Trophy, ChartNoAxesCombined, Compass,
+  Mountain, Crown, Gift, Lightbulb, CircleHelp, FileText, Bell,
   ScrollText, Sun, type LucideIcon,
 } from 'lucide-react';
 import { FantasyCard } from '../../components/fantasy/FantasyCard';
-import { ProgressMeter } from '../../components/fantasy/ProgressMeter';
+import { TravelerPanel } from './TravelerPanel';
 import { StatusBadge } from '../../components/fantasy/StatusBadge';
 import { previewInbox, previewAgenda, mockDataNotice } from '../../mocks/preview';
 
@@ -71,34 +71,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <aside className="hero-summary hero-summary-v2 adventure-hero" aria-label="旅行者成长面板">
-        <div className="hero-identity hero-identity-art">
-          <div className="character-stage">
-            <div className="character-title"><span className="character-sun" aria-hidden="true">✺</span><div><strong>你好，旅行者</strong><small>踏上今天的冒险旅程</small></div></div>
-            <img className="traveler-portrait" src="/art/traveler.webp" alt="蓝色斗篷的奇幻旅行者立绘" onError={event => { event.currentTarget.hidden = true; }}/>
-            <div className="character-quote">工作是通往更大世界的修行。</div>
-          </div>
-          <div className="hero-level"><strong>Lv. —</strong><small>经验值待接入 · 未计算</small></div>
-          <ProgressMeter value={0} label="尚未启用的成长经验" tone="blue"/>
-        </div>
-        <div className="hero-stat-grid" aria-label="成长指标尚未接入真实数据">
-          <div><Zap size={22}/><strong>—</strong><span>今日能量</span></div>
-          <div><Flame size={22}/><strong>—</strong><span>连续记录</span></div>
-          <div><ChartNoAxesCombined size={22}/><strong>—</strong><span>本周进度</span></div>
-          <div><Trophy size={22}/><strong>—</strong><span>成就徽章</span></div>
-        </div>
-        <div className="quest-chain">
-          <div className="quest-chain-heading"><ListChecks size={16}/><strong>今日任务链 <small className="quest-demo-flag">示意</small></strong><Link to="/tasks">查看全部 <ChevronRight size={13}/></Link></div>
-          <div className="quest-chain-rail" aria-label="阶段示意，不代表实际完成">
-            {['规划','执行','复盘','成长'].map((step,i)=><div key={step} className="quest-chain-step">
-              <span className={i===0?'quest-chain-orb is-start':'quest-chain-orb'}>{i+1}</span>
-              <small>{step}</small>
-            </div>)}
-            <Link className="quest-chain-reward" to="/growth" aria-label="查看尚未解锁的成长奖励"><Gift size={32}/><small>奖励</small></Link>
-          </div>
-          <p className="quest-chain-note">演示阶段图，未关联实际任务完成记录</p>
-        </div>
-      </aside>
+      <TravelerPanel />
 
       <section className="home-bottom" aria-label="首页工作摘要">
         <FantasyCard title="信息收件箱" icon={Inbox} action={<Link to="/inbox" className="text-link">查看全部 →</Link>}>

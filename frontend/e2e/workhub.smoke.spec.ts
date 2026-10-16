@@ -493,3 +493,25 @@ test('M1.7 narrow-mobile calibrated landmarks keep titles in banner safe area', 
   }
   await page.screenshot({path:testInfo.outputPath('calibrated-seven-landmarks-mobile.png'),fullPage:true});
 });
+
+test('M1.7 banner text blocks align vertically with measured art centers',async ({page})=>{
+  const expected:Record<string,number>={quest:184.5,project:180.5,message:184.5,capture:194,calendar:192,side:193.5,growth:192.5};
+  for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    const map=page.getByRole('region',{name:'冒险地图导航'});
+    await expect(map.locator('.landmark-art-ready')).toHaveCount(7);
+    for(const [theme,center] of Object.entries(expected)){
+      const node=map.locator('.animated-landmark[data-theme="'+theme+'"]');
+      const [imageBounds,textBounds]=await Promise.all([
+        node.locator('.landmark-painted-art').boundingBox(),
+        node.locator('.landmark-scroll').boundingBox()
+      ]);
+      expect(imageBounds&&textBounds).toBeTruthy();
+      const artCenter=imageBounds!.y+imageBounds!.height*center/325;
+      const labelCenter=textBounds!.y+textBounds!.height/2;
+      expect(Math.abs(artCenter-labelCenter),theme+' @ '+viewport.width+'px text vertical centering').toBeLessThan(1.75);
+      await expect(node.locator('.landmark-scroll strong')).toBeVisible();
+    }
+  }
+});

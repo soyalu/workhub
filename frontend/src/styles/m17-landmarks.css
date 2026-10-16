@@ -71,7 +71,7 @@
     left:-2px;top:-26px;width:calc(100% + 4px);height:108px;
   }
   .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll {
-    left:49%;top:14px;width:49%;height:32px;
+    left:49%;top:var(--lm-tablet-text-top,22px);width:49%;height:32px;
     gap:2px;justify-content:center;
   }
   .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll strong {
@@ -86,7 +86,7 @@
     left:0;top:-25px;width:100%;height:106px;
   }
   .adventure-dashboard .adventure-map .map-node.landmark.landmark-art-ready .landmark-scroll {
-    left:51%;top:14px;width:46%;height:30px;gap:0;
+    left:51%;top:var(--lm-mobile-text-top,21px);width:46%;height:30px;gap:0;
   }
   .adventure-dashboard .map-node.landmark.landmark-art-ready .landmark-scroll strong {
     font-size:10px;line-height:1.2;letter-spacing:-.15px;

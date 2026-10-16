@@ -30,3 +30,8 @@
 - 文字与金属徽章不重叠；副标题在宽屏正常显示，手机端保留在 aria-label。
 - 所有 7 个 DOM Link 能正确跳转，粒子点击穿透。
 - 两种尺寸截图与原稿人工逐项比对。
+
+## 七地标文字垂直居中修正
+实际 510×325 WebP 的金色横幅上下边界不完全一致。基于 x=350 的金边纵向测量，七组横幅中心 Y 分别为 quest 184.5、project 180.5、message 184.5、capture 194、calendar 192、side 193.5、growth 192.5。
+新增 bannerCenterSourceY，文字上边距通过 imageTop + imageHeight × (bannerCenterSourceY / 325) − textHeight / 2 自动计算；桌面、平板、390px 手机分别采用实际绘制尺寸。
+不改变地图中心坐标、徽章宽高、文字左边距及 PixiJS 效果。Playwright 同时检查 1440px 和 390px 的横幅纵向对齐误差。

@@ -20,8 +20,9 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
   const mapImage = map.locator('img.adventure-scene');
   await expect(mapImage).toHaveAttribute('src', '/art/home-map.webp');
   await expect.poll(() => mapImage.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(1200);
-  const traveler = page.locator('img.traveler-portrait');
+  const traveler = page.locator('img.traveler-scene-image');
   await expect(traveler).toBeVisible();
+  await expect(traveler).toHaveAttribute('src', '/art/backgrounds/traveler-scene.webp');
   const portraitPanel = page.locator('.adventure-hero .character-stage');
   await expect(portraitPanel).toBeVisible();
   const portraitBounds = await portraitPanel.boundingBox();
@@ -172,7 +173,7 @@ test('1440 与 1280 首页人物立绘区域不能塌陷', async ({ page }) => {
     expect(rect).not.toBeNull();
     expect(rect!.height).toBeGreaterThan(230);
     expect(rect!.width).toBeGreaterThan(240);
-    await expect(stage.locator('img.traveler-portrait')).toBeVisible();
+    await expect(stage.locator('img.traveler-scene-image')).toBeVisible();
   }
 });
 

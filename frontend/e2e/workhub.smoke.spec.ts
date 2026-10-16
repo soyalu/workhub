@@ -204,6 +204,14 @@ for (const { width, height } of [
     expect(geometry.noteBottom).toBeGreaterThanOrEqual(height - 24);
     expect(geometry.cardsBottom).toBeGreaterThanOrEqual(height - 48);
     expect(geometry.pageWidth).toBeLessThanOrEqual(width + 1);
+    const agendaCard = page.locator('.home-bottom .fantasy-card').nth(1);
+    const fourthEntry = page.locator('.home-agenda-row').last();
+    const calendarBounds = await agendaCard.boundingBox();
+    const fourthBounds = await fourthEntry.boundingBox();
+    expect(calendarBounds).not.toBeNull();
+    expect(fourthBounds).not.toBeNull();
+    expect(fourthBounds!.y + fourthBounds!.height).toBeLessThanOrEqual(calendarBounds!.y + calendarBounds!.height - 2);
+
     if (height >= 1000) expect(geometry.sceneHeight).toBeGreaterThan(620);
     await page.screenshot({ path: testInfo.outputPath('viewport-fill-' + width + 'x' + height + '.png'), fullPage: true });
   });

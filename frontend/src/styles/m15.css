@@ -303,3 +303,28 @@
     justify-content: space-around;
   }
 }
+
+
+/* Keep calendar's fourth entry inside its card when cards are stretched. */
+@media (min-width: 1180px) {
+  .is-home-route .adventure-dashboard .home-bottom .fantasy-card-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .is-home-route .adventure-dashboard .home-calendar-heading {
+    flex: 0 0 auto;
+  }
+  .is-home-route .adventure-dashboard .home-inbox-list,
+  .is-home-route .adventure-dashboard .home-agenda {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    justify-content: space-evenly;
+  }
+  .is-home-route .adventure-dashboard .quest-chain {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}

@@ -1,6 +1,6 @@
 import {
-  BookOpenText, CalendarDays, ChartNoAxesCombined, Compass, Feather,
-  FolderKanban, Inbox, ListChecks, ScrollText, Clock3, type LucideIcon,
+  BookOpenText, CalendarDays, ChartNoAxesCombined, House, Swords, Feather,
+  FolderKanban, Inbox, ScrollText, Clock3, type LucideIcon,
 } from 'lucide-react';
 export interface NavigationItem {
   label: string;
@@ -9,8 +9,8 @@ export interface NavigationItem {
   description: string;
 }
 export const navigation: NavigationItem[] = [
-  { label: '主页 · 冒险地图', to: '/', icon: Compass, description: '工作总览与模块入口' },
-  { label: '今日主线任务', to: '/tasks', icon: ListChecks, description: '任务与执行安排' },
+  { label: '主页 · 冒险地图', to: '/', icon: House, description: '工作总览与模块入口' },
+  { label: '今日主线任务', to: '/tasks', icon: Swords, description: '任务与执行安排' },
   { label: '支线任务', to: '/side-quests', icon: ScrollText, description: '专项、战鼓会与读书打卡' },
   { label: '快速录入', to: '/capture', icon: Feather, description: '低摩擦捕获工作信息' },
   { label: '工作日历', to: '/calendar', icon: CalendarDays, description: '计划与实际' },

@@ -1,0 +1,177 @@
+/*
+ * M1.7 sidebar artwork fidelity pass.
+ * Gold plaque/compass: dedicated vector artwork, not a generic CSS polygon.
+ * The approved map, landmark coordinates, Pixi canvas and sidebar width are untouched.
+ */
+.app-sidebar {
+  --nav-brass-light:#fff0bf;
+  --nav-brass-mid:#dda757;
+  --nav-brass-dark:#865925;
+}
+.app-sidebar .brand-lockup {
+  position:relative;
+  gap:11px;
+  min-height:80px;
+  padding:4px 3px 14px;
+}
+.app-sidebar .brand-compass-mark {
+  opacity:1;
+  position:relative;
+  isolation:isolate;
+  flex:0 0 64px;
+  width:64px;
+  height:64px;
+  display:grid;
+  place-items:center;
+  filter:drop-shadow(0 2px 2px #050f1bcc) drop-shadow(0 0 5px #e5a94e35);
+}
+.app-sidebar .brand-compass-mark::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:8px;
+  border-radius:50%;
+  background:radial-gradient(circle,#f5d49225,transparent 72%);
+  pointer-events:none;
+}
+.app-sidebar .brand-compass-svg {display:block;width:64px;height:64px;overflow:visible;}
+.app-sidebar .brand-lockup > div {min-width:0;}
+.app-sidebar .brand-lockup strong {
+  display:block;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:23px;
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:.1px;
+  color:#fff0c6;
+  text-shadow:0 1px 0 #71491f,0 2px 4px #030b16;
+}
+.app-sidebar .brand-lockup > div > span {
+  display:block;
+  white-space:nowrap;
+  letter-spacing:.45px;
+  margin-top:5px;
+  font-family:var(--wh-font-display);
+  font-size:11px;
+  color:#eee0c6;
+  opacity:1;
+  text-shadow:0 1px 3px #020e1d;
+}
+.app-sidebar .sidebar-navigation {row-gap:2px;}
+.app-sidebar .sidebar-link {
+  position:relative;
+  isolation:isolate;
+  width:100%;
+  min-height:50px;
+  padding:9px 11px 9px 20px;
+  display:flex;
+  align-items:center;
+  gap:26px;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  color:#ecede8;
+  transition:color .16s ease,background-color .16s ease,filter .16s ease;
+}
+.app-sidebar .sidebar-link::before,
+.app-sidebar .sidebar-link::after {content:none;}
+.app-sidebar .nav-icon-wrap {
+  position:relative;
+  z-index:2;
+  flex:0 0 25px;
+  width:25px;
+  height:28px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#eac47e;
+  filter:drop-shadow(0 1px 1px #07111f);
+}
+.app-sidebar .nav-icon-wrap svg {
+  color:currentColor;
+  stroke-width:1.75;
+}
+.app-sidebar .sidebar-link-label {
+  position:relative;
+  z-index:2;
+  font-family:var(--wh-font-display);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.1px;
+  line-height:1.4;
+  white-space:nowrap;
+  text-shadow:0 1px 3px #020a18;
+}
+.app-sidebar .sidebar-link:not(.is-active):hover {
+  color:#fff5d9;
+  background:linear-gradient(90deg,#e0ad5426,transparent);
+}
+.app-sidebar .sidebar-link:not(.is-active):hover .nav-icon-wrap {color:#ffe1a0;}
+.app-sidebar .sidebar-link.is-active,
+.is-home-route .app-sidebar .sidebar-link.is-active {
+  color:#fff5da;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  border-radius:0;
+  filter:drop-shadow(0 3px 5px #040b16af) drop-shadow(0 0 6px #e6af5870);
+}
+.app-sidebar .sidebar-active-ornament {
+  position:absolute;
+  z-index:0;
+  inset:-2px -2px;
+  width:calc(100% + 4px);
+  height:calc(100% + 4px);
+  display:block;
+  overflow:visible;
+  pointer-events:none;
+}
+.app-sidebar .sidebar-link.is-active .nav-icon-wrap {
+  color:#fff5d5;
+  filter:drop-shadow(0 1px 2px #683719b3) drop-shadow(0 0 4px #fff0b777);
+}
+.app-sidebar .sidebar-link.is-active .sidebar-link-label {
+  color:#fff9e8;
+  font-size:14px;
+  font-weight:700;
+  text-shadow:0 1px 1px #5b3518,0 2px 4px #4f2b14a8;
+}
+.app-sidebar .sidebar-link.is-active[href="/"] .nav-icon-wrap svg {
+  fill:#fff5da;
+  stroke:#91602b;
+  stroke-width:1.25;
+}
+.app-sidebar .sidebar-link:focus-visible {
+  outline:2px solid #ffedb7;
+  outline-offset:2px;
+  z-index:3;
+}
+@media (min-width:901px) {
+  .is-home-route .app-sidebar .brand-lockup {
+    min-height:80px;
+    padding:3px 1px 14px;
+    gap:10px;
+  }
+  .is-home-route .app-sidebar .brand-compass-mark,
+  .is-home-route .app-sidebar .brand-compass-svg {
+    width:64px;
+    height:64px;
+  }
+  .is-home-route .app-sidebar .brand-compass-mark {flex-basis:64px;}
+  .is-home-route .app-sidebar .brand-lockup strong {font-size:23px;}
+  .is-home-route .app-sidebar .sidebar-navigation {gap:2px;}
+  .is-home-route .app-sidebar .sidebar-link {
+    min-height:50px;
+    padding:9px 9px 9px 20px;
+  }
+}
+@media (max-width:900px) {
+  .app-sidebar .brand-lockup {padding:7px 6px 14px;}
+  .app-sidebar .sidebar-link {min-height:50px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .app-sidebar .sidebar-link {transition:none;}
+}
+
+/* Override generic span styling: this mark must remain fully opaque. */
+.app-sidebar .brand-lockup > .brand-compass-mark {display:grid;opacity:1;}

@@ -9,6 +9,7 @@ import './styles/m16-frames.css';
 import './styles/m17-motion.css';
 import './styles/m17-art.css';
 import './styles/m17-landmarks.css';
+import './styles/m17-sidebar.css';
 
 const root = document.getElementById('root');
 

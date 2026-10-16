@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Bell, Compass, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
+import { Bell, Feather, Menu, Search, ShieldCheck, X } from 'lucide-react';
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { navigation } from '../../app/navigation';
+import { CompassRoseMark } from './CompassRoseMark';
+import { SidebarActivePlaque } from './SidebarActivePlaque';
 import { checkHealth } from '../../lib/api';
 
 type ConnectionStatus = 'checking' | 'online' | 'offline';
@@ -27,7 +29,7 @@ export function AppShell() {
       {menuOpen && <button type="button" className="sidebar-scrim" aria-label="关闭导航" onClick={() => setMenuOpen(false)} />}
       <aside className={'app-sidebar ' + (menuOpen ? 'is-open' : '')} aria-label="主导航">
         <div className="brand-lockup">
-          <Compass className="brand-emblem" aria-hidden="true" size={43} strokeWidth={1.4}/>
+          <span className="brand-compass-mark"><CompassRoseMark /></span>
           <div><strong>WorkHub</strong><span>个人办公工作台</span></div>
           <button type="button" className="sidebar-close" aria-label="关闭导航" onClick={() => setMenuOpen(false)}><X size={18} /></button>
         </div>
@@ -36,8 +38,13 @@ export function AppShell() {
           {navigation.map(({ label, to, icon: Icon }) => (
             <NavLink key={to} to={to} end={to === '/'} onClick={() => setMenuOpen(false)}
               className={({ isActive }) => 'sidebar-link ' + (isActive ? 'is-active' : '')}>
-              <Icon size={19} strokeWidth={1.8} aria-hidden="true" />
-              <span>{label}</span>
+              {({ isActive }) => (
+                <>
+                  {isActive && <SidebarActivePlaque />}
+                  <span className="nav-icon-wrap" aria-hidden="true"><Icon size={21} strokeWidth={1.75} /></span>
+                  <span className="sidebar-link-label">{label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>

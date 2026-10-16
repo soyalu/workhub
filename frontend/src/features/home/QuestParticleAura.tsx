@@ -1,7 +1,18 @@
+import type { LandmarkTheme } from './AnimatedLandmark';
 import { useEffect, useRef, useState } from 'react';
 
+const TONE_COLORS = {
+  quest: [0xfff4c9, 0xffca67],
+  project: [0xe8f7ff, 0x4bafff],
+  message: [0xffe6cc, 0xfa6478],
+  calendar: [0xffebcd, 0xf39a5a],
+  capture: [0xf4ddff, 0xb881fb],
+  side: [0xfff0d3, 0xd1a16e],
+  growth: [0xd7f7ff, 0x4ed8ee],
+} as const;
+
 /** PixiJS is loaded lazily and never controls navigation or hit testing. */
-export function QuestParticleAura({ active }: { active: boolean }) {
+export function QuestParticleAura({ active, tone }: { active: boolean; tone: LandmarkTheme }) {
   const host = useRef<HTMLSpanElement>(null);
   const activeRef = useRef(active);
   const [fallback, setFallback] = useState(false);
@@ -41,7 +52,7 @@ export function QuestParticleAura({ active }: { active: boolean }) {
         const glints = Array.from({ length: count }, (_, index) => {
           const radius = 1.1 + (index % 4) * .48;
           const shape = new Graphics().circle(0, 0, radius).fill({
-            color: index % 4 === 0 ? 0xfff5c9 : 0xffc96e,
+            color: index % 4 === 0 ? TONE_COLORS[tone][0] : TONE_COLORS[tone][1],
           });
           instance.stage.addChild(shape);
           return { shape, radius: 20 + (index % 6) * 5, angle: index * 2.39996, speed: .22 + (index % 5) * .04 };
@@ -90,6 +101,7 @@ export function QuestParticleAura({ active }: { active: boolean }) {
 
   return <span ref={host}
     className={'quest-particle-aura' + (fallback ? ' is-canvas-fallback' : '')}
+    data-tone={tone}
     data-effect-state={fallback ? 'fallback' : 'enabled'}
     aria-hidden="true"/>;
 }

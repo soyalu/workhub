@@ -277,3 +277,35 @@ test('M1.7 hover snapshot keeps Pixi overlay non-interactive', async ({ page }, 
   }
   await page.screenshot({ path:testInfo.outputPath('quest-particle-hover.png'), fullPage:true });
 });
+
+
+test('M1.7 七地标共用动画规则，同一时间最多一个 Pixi Canvas', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width:1440, height:900 });
+  await page.goto('/');
+  const map = page.getByRole('region', { name:'冒险地图导航' });
+  await expect(map.locator('.animated-landmark')).toHaveCount(7);
+  await expect(map.locator('.quest-particle-aura')).toHaveCount(1);
+  for (const [name, tone] of [
+    ['项目中心','project'],['信息收件箱','message'],
+    ['快速录入','capture'],['工作日历','calendar'],
+    ['支线任务','side'],['成长分析','growth'],
+  ]) {
+    await map.getByRole('link', { name:new RegExp('^' + name + '：') }).hover();
+    await expect(map.locator('.quest-particle-aura')).toHaveCount(1);
+    await expect(map.locator('.quest-particle-aura')).toHaveAttribute('data-tone',tone);
+    expect(await map.locator('.quest-particle-aura canvas').count()).toBeLessThanOrEqual(1);
+  }
+  await page.screenshot({path:testInfo.outputPath('seven-landmark-motion.png'),fullPage:true});
+  await page.getByRole('button',{name:'地图动态效果'}).click();
+  await expect(map.locator('.quest-particle-aura')).toHaveCount(0);
+  await expect(map.locator('.animated-landmark[data-animation-enabled="false"]')).toHaveCount(7);
+  await map.getByRole('link',{name:/^成长分析：/}).click();
+  await expect(page).toHaveURL(/\/growth$/);
+});
+
+test('M1.7 系统减少动效时七个地标均静止',async ({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('/');
+  await expect(page.locator('.animated-landmark[data-animation-enabled="false"]')).toHaveCount(7);
+  await expect(page.locator('.quest-particle-aura')).toHaveCount(0);
+});

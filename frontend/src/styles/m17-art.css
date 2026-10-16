@@ -12,3 +12,18 @@
   width:100%;height:100%;object-fit:contain;
 }
 .adventure-dashboard .reward-chest-locked {opacity:.79;}
+
+
+/* Image-generated halo artwork is optional and never replaces the Pixi motion. */
+.adventure-dashboard .animated-landmark .landmark-aura-art{
+  position:absolute;left:-54px;top:-62px;
+  width:210px;height:172px;z-index:0;
+  pointer-events:none;filter:drop-shadow(0 0 5px #ffda7490);
+}
+.adventure-dashboard .animated-landmark .landmark-aura-art .optional-art{
+  width:100%;height:100%;object-fit:contain;display:block;
+  pointer-events:none;
+}
+@media(prefers-reduced-motion:reduce){
+  .adventure-dashboard .animated-landmark .landmark-aura-art{display:none}
+}

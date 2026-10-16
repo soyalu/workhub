@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight, type LucideIcon } from 'lucide-react';
 import { motion } from 'motion/react';
+import { OptionalArt } from './OptionalArt';
+
+const ART_FILE = {
+  quest:'main-quest-gold.webp',
+  project:'project-blue.webp',
+  message:'inbox-red.webp',
+  capture:'capture-purple.webp',
+  calendar:'calendar-orange.webp',
+  side:'side-quest-amber.webp',
+  growth:'growth-cyan.webp',
+} as const;
 
 export type LandmarkTheme = 'quest' | 'project' | 'message' | 'calendar' | 'capture' | 'side' | 'growth';
 
@@ -37,6 +48,13 @@ export function AnimatedLandmark({
       onFocus={() => onActivate(theme)}
       onBlur={() => onDeactivate(theme)}
     >
+      {enabled && active && <motion.span className="landmark-aura-art" aria-hidden="true"
+        initial={{opacity:0,scale:.92}}
+        animate={{opacity:.5,scale:1.03,rotate:1}}
+        exit={{opacity:0}}
+        transition={{duration:.42}}>
+        <OptionalArt src={'/art/effects/'+ART_FILE[theme]} fallback={null}/>
+      </motion.span>}
       <motion.span className="landmark-emblem" aria-hidden="true"
         animate={{ y: enabled && active ? -4 : 0, scale: enabled && active ? 1.09 : 1 }}
         transition={enabled ? { type: 'spring', stiffness: 280, damping: 22 } : { duration: 0 }}>

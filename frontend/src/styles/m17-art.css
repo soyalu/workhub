@@ -1,0 +1,14 @@
+
+/* Optional downloaded art, preserving original painted relief and glow. */
+.adventure-dashboard .m16-stat-ring .optional-art{
+  width:100%;height:100%;object-fit:contain;
+  display:block;filter:drop-shadow(0 1px 3px #dfb36752);
+}
+.adventure-dashboard .reward-chest-art{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:43px;height:43px;pointer-events:none;
+}
+.adventure-dashboard .reward-chest-art .optional-art{
+  width:100%;height:100%;object-fit:contain;
+}
+.adventure-dashboard .reward-chest-locked {opacity:.79;}

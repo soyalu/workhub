@@ -32,15 +32,15 @@
 .ornate-corner--bl{bottom:-2px;left:-2px;transform:rotate(270deg)}
 .ornate-frame--map {--frame-light:#e9c787;--frame-mid:#69451b;}
 .ornate-frame--companion {--frame-light:#f1d495;--frame-mid:#674d2b;}
-.ornate-frame--parchment {--frame-light:#cfa86d;--frame-mid:#ead1a3;inset:3px;border-width:1px;opacity:.9}
-.ornate-frame--parchment .ornate-corner{width:18px;height:18px;background-size:72% 72%,90% 90%,100% 100%;}
+.ornate-frame--parchment {--frame-light:#d9bb85;--frame-mid:#ead8b4;inset:4px;border-width:1px;opacity:.67}
+.ornate-frame--parchment .ornate-corner{width:14px;height:14px;opacity:.72;background-size:70% 70%,88% 88%,100% 100%;}
 .ornate-parchment{position:relative;isolation:isolate;overflow:hidden}
 .ornate-parchment .fantasy-card-header,.ornate-parchment .fantasy-card-body{position:relative;z-index:1}
 .ornate-parchment .ornate-section-heading{display:flex;align-items:center;gap:6px}
 .ornate-section-heading h2{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .ornate-heading-crest {
-  display:inline-grid;place-items:center;flex:0 0 24px;
-  width:24px;height:24px;
+  display:inline-grid;place-items:center;flex:0 0 21px;
+  width:21px;height:21px;
   color:#695029;
   border:1px solid #c29856;border-radius:5px;
   background:radial-gradient(circle at 25% 17%,#fffbdf,#e6c999);

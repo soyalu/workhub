@@ -14,7 +14,9 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.0",
-    "lucide-react": "^0.468.0"
+    "lucide-react": "^0.468.0",
+    "motion": "^12.24.0",
+    "pixi.js": "^8.15.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.10",

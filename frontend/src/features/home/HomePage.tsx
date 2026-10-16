@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useReducedMotion } from 'motion/react';
+import { AnimatedQuestLandmark } from './AnimatedQuestLandmark';
 import {
   BookOpenText, CalendarDays, ChevronRight, Feather, FolderKanban, Inbox,
   ListChecks, Trophy, ChartNoAxesCombined, Compass,
@@ -40,6 +42,16 @@ const achievements = [
 
 export function HomePage() {
   const [sceneStatus, setSceneStatus] = useState<'loading' | 'ready' | 'missing'>('loading');
+  const reducedMotion = useReducedMotion();
+  const [effectsOn, setEffectsOn] = useState(() => {
+    try { return window.localStorage.getItem('workhub.effects') !== 'off'; }
+    catch { return true; }
+  });
+  const effectsEnabled = effectsOn && !reducedMotion;
+  useEffect(() => {
+    try { window.localStorage.setItem('workhub.effects', effectsOn ? 'on' : 'off'); }
+    catch { /* local storage is optional */ }
+  }, [effectsOn]);
   return (
     <div className="home-layout adventure-dashboard">
       <section className={'map-stage map-stage-v2 is-raster-art adventure-map' + (sceneStatus === 'missing' ? ' art-missing' : '')} aria-label="冒险地图导航">
@@ -54,6 +66,11 @@ export function HomePage() {
           <div className="eyebrow"><Sun size={15}/> THE ADVENTURE BEGINS</div>
           <h1>今日 · 主线任务</h1>
           <p>把工作，变成一场值得期待的冒险。</p>
+          <button type="button" className="effects-toggle" aria-label="地图动态效果"
+            aria-pressed={effectsEnabled} disabled={Boolean(reducedMotion)}
+            onClick={() => setEffectsOn((value) => !value)}>
+            {reducedMotion ? '系统已减少动效' : effectsOn ? '动态效果：开' : '动态效果：关'}
+          </button>
         </div>
         <div className="map-motto" aria-hidden="true">每一份认真工作的你，<br/>都在书写属于自己的传奇。</div>
         <svg className="adventure-route" viewBox="0 0 1000 570" preserveAspectRatio="none" aria-hidden="true">
@@ -62,12 +79,14 @@ export function HomePage() {
         </svg>
         <div className="map-nodes">
           {landmarks.map(({ label, description, to, icon: Icon, location, theme }) => (
-            <Link className={'map-node landmark landmark-' + theme + ' ' + location} key={to} to={to}
-              aria-label={label + '：' + description}>
-              <span className="landmark-emblem" aria-hidden="true"><Icon size={22} strokeWidth={1.8}/></span>
-              <span className="landmark-scroll"><strong>{label}</strong><small>{description}</small></span>
-              <ChevronRight className="landmark-chevron" size={15} aria-hidden="true"/>
-            </Link>
+            theme === 'quest'
+              ? <AnimatedQuestLandmark key={to} enabled={Boolean(effectsEnabled)}/>
+              : <Link className={'map-node landmark landmark-' + theme + ' ' + location} key={to} to={to}
+                  aria-label={label + '：' + description}>
+                  <span className="landmark-emblem" aria-hidden="true"><Icon size={22} strokeWidth={1.8}/></span>
+                  <span className="landmark-scroll"><strong>{label}</strong><small>{description}</small></span>
+                  <ChevronRight className="landmark-chevron" size={15} aria-hidden="true"/>
+                </Link>
           ))}
         </div>
         <OrnateFrame variant="map" />

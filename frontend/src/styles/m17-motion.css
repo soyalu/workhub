@@ -1,0 +1,27 @@
+/* M1.7: only the golden main quest has dynamic feedback. */
+.adventure-dashboard .animated-quest-landmark { isolation: isolate; }
+.adventure-dashboard .animated-quest-landmark .quest-particle-aura {
+  position: absolute; left: -38px; top: -29px; width: 190px; height: 116px;
+  z-index: 0; pointer-events: none !important; overflow: visible;
+}
+.adventure-dashboard .animated-quest-landmark .quest-particle-aura canvas {
+  width:190px;height:116px;display:block;pointer-events:none !important;
+}
+.adventure-dashboard .animated-quest-landmark .landmark-scroll { z-index:1; position:relative; }
+.adventure-dashboard .animated-quest-landmark .landmark-emblem { z-index:2; }
+.adventure-dashboard .animated-quest-landmark .is-canvas-fallback::before {
+  content:'';position:absolute;left:24px;top:22px;width:65px;height:65px;
+  border-radius:50%;background:radial-gradient(circle,#ffdc7677,transparent 72%);
+}
+.adventure-dashboard .effects-toggle {
+  margin-top:9px;padding:5px 10px;border:1px solid #b39153;border-radius:5px;
+  color:#4e422f;background:#fff1d9ef;cursor:pointer;font-size:11px;font-weight:600;
+}
+.adventure-dashboard .effects-toggle:focus-visible {outline:2px solid #12527f;outline-offset:3px}
+.adventure-dashboard .effects-toggle:disabled {opacity:.66;cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){
+  .adventure-dashboard .animated-quest-landmark,
+  .adventure-dashboard .animated-quest-landmark:hover{transition:none!important;animation:none!important}
+  .adventure-dashboard .animated-quest-landmark .landmark-scroll,
+  .adventure-dashboard .animated-quest-landmark .landmark-emblem{transition:none!important}
+}

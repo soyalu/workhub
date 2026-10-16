@@ -1,31 +1,45 @@
 # WorkHub · Engineering Roadmap
 
-## M1: Foundation (Go migration)
-- [x] Product principles, README, .gitignore and frontend/backend split.
-- [x] React + Vite frontend placeholder.
-- [x] Replace Fastify/TypeScript backend with Go 1.23+ standard-library HTTP server.
-- [x] Preserve GET /api/health contract, add Go unit tests and clean shutdown.
-- [x] Root scripts run React (npm) + Go separately.
-- [ ] Verify npm dependency installation and frontend build; create package-lock.json.
-- [ ] Add CI for frontend build and Go tests.
-- [ ] Implement approved fantasy adventure UI as accessible, reusable React components.
+## M1: Foundation and design system
+- [x] Product requirements, GitHub repository, Go API skeleton.
+- [x] React Router navigation and M1 page skeletons on feature/m1-ui-foundation.
+- [x] Shared adventure design tokens and reusable parchment/status/progress components.
+- [x] Responsive sidebar and distinct page layouts for home, projects, calendar, journal, capture, inbox and growth.
+- [x] GitHub Actions checks for frontend and Go.
+- [x] Commit a reproducible frontend package-lock.json and switch CI to npm ci.
+- [x] Add Playwright smoke tests and desktop/mobile screenshot capture to CI.
+- [x] Refine map node medallions, traveler cutout blending, parchment cards and mobile destination dock; verify via CI screenshots.
+- [x] Add Playwright layout checks for 1440, 1280, 1024, 900 and 390px; keep browser screenshots for review.
+- [ ] Complete side-by-side visual acceptance against the approved homepage and test on actual devices.
+- [x] Separate the homepage scenic layer into an independent SVG illustration, retaining semantic React navigation.
+- [x] Prepare independently loadable WebP scene/portrait asset slots and a local preview/art package.
+- [x] Commit three WebP raster assets and validate their hashes in CI; missing map assets now trigger a visible error (no silent SVG fallback).
+- [x] Use user-approved original fantasy art to prepare a clean map without embedded interface text, a transparent traveler cutout and a sidebar night illustration.
+- [ ] Polish traveler edge mask, refine map node placement and reach screenshot parity with the user-approved homepage.
+- [ ] Upgrade calendar to full month/week/day views and journal to editable drafts after domain APIs exist.
 
-## M2: Contextual input and data model
+## M2: Context-aware input and persistence
+- SQLite migrations and private data storage.
 - Project, Capture, WorkEvent, Task, CalendarEvent and Artifact.
-- SQLite migrations, backup and privacy-safe tests.
-- One-line input, context lookup, minimal-validity checks and targeted follow-up.
-- Recoverable pending information lifecycle and retention policies.
+- Minimal-validity checking, targeted follow-up questions, pending/confirmed record lifecycle.
+- Verified work-event linkage to project and journal.
 
-## M3: Workday closed loop
-- Calendar month/week/day and historical journal timeline.
-- Editable, confirmed daily journal with source traceability.
-- Monthly consulting report and evidence-based aggregation.
+## M3: Daily work completion loop
+- Editable daily journal, past-date timeline and cross-module navigation.
+- Monthly consultation summaries from confirmed work sources.
 
-## M4: Productivity
-- Clock-in/out, work effort allocation and reminders.
-- Materials, achievements and useful self-analysis.
+## M4: Time and outcomes
+- Workday check-in/out and independently attributed effort.
+- Reminders, material outcomes and personal analytics.
 
-## M5: Desktop and multi-device
-- macOS Tauri shell, global quick capture and system notifications.
-- Mobile-friendly capture and authenticated NAS sync.
-- Optional AI assistance without fabricated work records.
+## M5: Desktop and multiple devices
+- macOS Tauri shell, system notifications and global quick capture.
+- Authenticated NAS/mobile usage and optional AI assistance.
+
+## M1.5 Reference-aligned homepage (current branch)
+- [x] Restore the 7 original map destinations (main, project, inbox, quick input, calendar, side, growth) and 10 sidebar entries.
+- [x] Keep new side-quest and time-tracking routes honest placeholders without fake persistence.
+- [x] Scope full-screen desktop game layout to homepage, preserving other internal page layouts.
+- [x] Replace generic node badges with distinct shield/parchment landmark visual treatments and visible decorative adventure paths.
+- [x] Rework traveler visual proportion and staged reward chain; data remains uncomputed.
+- [ ] Compare final real-browser screenshots to the approved reference; obtain user visual signoff.

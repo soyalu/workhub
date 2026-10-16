@@ -1,0 +1,34 @@
+:root {
+  color-scheme: light;
+  --wh-navy-950: #0d1625;
+  --wh-navy-900: #15243a;
+  --wh-navy-800: #203755;
+  --wh-navy-700: #30486a;
+  --wh-gold-500: #c49a4b;
+  --wh-gold-400: #d9b66d;
+  --wh-gold-300: #f1d79b;
+  --wh-parchment-50: #fffdf5;
+  --wh-parchment-100: #fff8e9;
+  --wh-parchment-200: #f6ebd2;
+  --wh-parchment-300: #ead6b2;
+  --wh-text: #2f3b4b;
+  --wh-text-muted: #647181;
+  --wh-blue: #2a83ce;
+  --wh-green: #2a9578;
+  --wh-amber: #b67b27;
+  --wh-red: #c45c55;
+  --wh-outline: #dfc9a4;
+  --wh-shadow: 0 5px 24px rgb(23 31 48 / 11%);
+  --wh-radius-sm: 8px;
+  --wh-radius-md: 14px;
+  --wh-radius-lg: 20px;
+  --wh-space-1: 4px;
+  --wh-space-2: 8px;
+  --wh-space-3: 12px;
+  --wh-space-4: 16px;
+  --wh-space-5: 20px;
+  --wh-space-6: 24px;
+  --wh-space-8: 32px;
+  --wh-font-ui: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --wh-font-display: "Songti SC", "Noto Serif CJK SC", "SimSun", serif;
+}

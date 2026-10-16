@@ -21,7 +21,7 @@ WorkHub 是面向个人市场咨询与日常办公的工作台。以**项目机�
 | `backend/` | Go 1.23+（标准库 net/http） | API、业务规则、后台任务和未来 SQLite 持久化 |
 | 工程管理 | npm（仅管理前端）、Go Modules（管理后端） | 两端依赖独立管理、根脚本统一启动 |
 
-**目前只实现工程基础**：前端仍是占位页面，后端提供 `GET /api/health`。SQLite、业务 API、智能录入、真实 AI、奇幻视觉素材迁移和 Tauri 封装尚未完成。
+**当前 M1 验收进度**：React 多页面路由、奇幻设计系统与真实 WebP 地图/人物/夜景素材已入库。首页按已确认的结构包含浮岛地图、角色成长、信息收件箱、日历、日志快捷录入、近期成就四张卡片；所有演示数据均单独标记。Go 目前仅提供 `GET /api/health`。M1 已通过自动化视觉布局与交互检查，**仍待用户对照原始设计图做最终人工确认**。SQLite、智能识别/追问、真实业务 API、日志保存和 Tauri 均未实现。
 
 ## 本地启动
 
@@ -30,7 +30,7 @@ WorkHub 是面向个人市场咨询与日常办公的工作台。以**项目机�
 ```bash
 git clone https://github.com/soyalu/workhub.git
 cd workhub
-npm install
+npm ci
 npm run dev
 ```
 
@@ -48,7 +48,30 @@ npm run dev:backend
 
 后端默认监听本机地址。配置示例见 `backend/.env.example`；**Go 服务不会自动加载 .env 文件**，如需修改端口，请通过终端或部署环境设置，例如 `WORKHUB_PORT=3002 npm run dev:backend`，并同步调整 Vite 代理地址。
 
+## 功能路由（M1 演示交互）
+
+| 路由 | 页面 |
+| --- | --- |
+| `/` | 冒险地图首页及功能导航 |
+| `/tasks` | 今日任务 |
+| `/projects` | 项目中心（演示筛选） |
+| `/calendar` | 工作日历（月视图、日期选择） |
+| `/journal` | 每日工作日志（按日期跳转） |
+| `/capture` | 快速录入（仅本地预览，不保存） |
+| `/inbox` | 信息收件箱 |
+| `/growth` | 成长与工作分析 |
+
+详见 [M1 视觉与功能验收说明](docs/m1-acceptance.md) 和 [奇幻 UI 设计系统](docs/ui-design-system.md)。首页参考图是视觉方向，不是内页通用版式；页面必须使用真实组件，不能将整张设计图铺为背景并覆盖透明按钮。
+
 ## 校验
+
+包含 GitHub Actions 的 Playwright Chromium 页面跳转测试（截图作为运行产物保存）；本地如需运行浏览器测试：
+
+```bash
+npx playwright install chromium
+npm run test:e2e -w @workhub/frontend
+```
+
 
 ```bash
 npm run typecheck  # 前端 TS 检查、Go vet
@@ -63,7 +86,7 @@ npm test           # Go 后端测试
 ```text
 workhub/
 ├── frontend/
-│   └── src/                 # React 前端入口
+│   └── src/                 # 路由、页面、公共奇幻组件、设计 tokens 与 Mock 数据
 ├── backend/
 │   ├── cmd/server/          # Go 服务启动入口
 │   ├── internal/config/     # 环境变量和端口配置
@@ -80,7 +103,7 @@ workhub/
 
 ## 后续里程碑
 
-1. **M1**：工程初始化、基础检查和已确认的奇幻冒险 UI 迁移。
+1. **M1**：工程初始化、真实美术资源、首页视觉装配、多屏宽与交互自动化验收通过；最终视觉认可及实机验证待完成。
 2. **M2**：Go 业务模型、SQLite、工作信息采集、上下文关联和待补全记录生命周期。
 3. **M3**：日历、历史日志时间轴、日志确认、月度咨询工作记录。
 4. **M4**：打卡工时、提醒、材料成果及工作分析。
@@ -95,3 +118,7 @@ workhub/
 ## License
 
 目前未授予开源许可证；公开访问不等同于允许他人使用和分发代码。
+
+### M1.3 场景美术资源
+
+`frontend/public/art/home-map.webp`、`traveler.webp`、`sidebar-night.webp` 已作为真实二进制文件纳入版本管理；来自已确定的三张奇幻美术图，而非网页截图。运行 `npm run art:verify` 校验哈希；React 文本、任务和地图入口仍可独立交互。角色边缘抠图仍有精修空间，是否达到原设计需要人工对比确认；美术资源缺失时显示明确错误，不再静默使用 SVG 代替。

@@ -53,3 +53,9 @@ Thumbs.db
 # Future desktop packaging
 src-tauri/target/
 src-tauri/gen/
+
+# Playwright test artifacts
+frontend/test-results/
+frontend/playwright-report/
+playwright-report/
+test-results/

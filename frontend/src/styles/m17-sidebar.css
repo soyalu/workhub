@@ -15,6 +15,7 @@
   padding:4px 3px 14px;
 }
 .app-sidebar .brand-compass-mark {
+  opacity:1;
   position:relative;
   isolation:isolate;
   flex:0 0 64px;
@@ -171,3 +172,6 @@
 @media (prefers-reduced-motion:reduce) {
   .app-sidebar .sidebar-link {transition:none;}
 }
+
+/* Override generic span styling: this mark must remain fully opaque. */
+.app-sidebar .brand-lockup > .brand-compass-mark {display:grid;opacity:1;}

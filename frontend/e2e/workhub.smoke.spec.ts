@@ -175,3 +175,36 @@ test('1440 与 1280 首页人物立绘区域不能塌陷', async ({ page }) => {
     await expect(stage.locator('img.traveler-portrait')).toBeVisible();
   }
 });
+
+
+// Catch fixed-height layouts that leave large empty regions on tall desktops.
+for (const { width, height } of [
+  { width: 1440, height: 900 },
+  { width: 1600, height: 1000 },
+  { width: 2048, height: 1241 },
+]) {
+  test('desktop homepage fills ' + width + 'x' + height + ' without grey gap', async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    const map = page.getByRole('region', { name: '冒险地图导航' });
+    const cards = page.getByRole('region', { name: '首页工作摘要' });
+    await expect(map).toBeVisible();
+    await expect(cards).toBeVisible();
+    const geometry = await page.evaluate(() => {
+      const scene = document.querySelector('.adventure-map')!.getBoundingClientRect();
+      const summary = document.querySelector('.home-bottom')!.getBoundingClientRect();
+      const note = document.querySelector('.adventure-dashboard .mock-notice')!.getBoundingClientRect();
+      return {
+        sceneHeight: scene.height,
+        cardsBottom: summary.bottom,
+        noteBottom: note.bottom,
+        pageWidth: document.documentElement.scrollWidth,
+      };
+    });
+    expect(geometry.noteBottom).toBeGreaterThanOrEqual(height - 24);
+    expect(geometry.cardsBottom).toBeGreaterThanOrEqual(height - 48);
+    expect(geometry.pageWidth).toBeLessThanOrEqual(width + 1);
+    if (height >= 1000) expect(geometry.sceneHeight).toBeGreaterThan(620);
+    await page.screenshot({ path: testInfo.outputPath('viewport-fill-' + width + 'x' + height + '.png'), fullPage: true });
+  });
+}

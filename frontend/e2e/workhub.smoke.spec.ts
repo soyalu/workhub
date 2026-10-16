@@ -22,6 +22,12 @@ test('首页的冒险场景及七个功能地标可访问', async ({ page }, tes
   await expect.poll(() => mapImage.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(1200);
   const traveler = page.locator('img.traveler-portrait');
   await expect(traveler).toBeVisible();
+  const portraitPanel = page.locator('.adventure-hero .character-stage');
+  await expect(portraitPanel).toBeVisible();
+  const portraitBounds = await portraitPanel.boundingBox();
+  expect(portraitBounds).not.toBeNull();
+  expect(portraitBounds!.height).toBeGreaterThan(230);
+  expect(portraitBounds!.width).toBeGreaterThan(240);
   await expect.poll(() => traveler.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(700);
   await expect(page.locator('.sidebar-scenery')).toHaveCSS('background-image', /sidebar-night\.webp/);
   await expect(map.locator('a.map-node')).toHaveCount(7);
@@ -151,4 +157,18 @@ test('首页七个地标各有独立目的地且图片与任务链分离', async
   await expect(page.locator('.adventure-route')).toBeVisible();
   await expect(page.locator('.quest-chain-step')).toHaveCount(4);
   await expect(page.locator('.quest-chain-reward')).toHaveAttribute('href', '/growth');
+});
+
+
+test('1440 与 1280 首页人物立绘区域不能塌陷', async ({ page }) => {
+  for (const width of [1440, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const stage = page.locator('.adventure-hero .character-stage');
+    const rect = await stage.boundingBox();
+    expect(rect).not.toBeNull();
+    expect(rect!.height).toBeGreaterThan(230);
+    expect(rect!.width).toBeGreaterThan(240);
+    await expect(stage.locator('img.traveler-portrait')).toBeVisible();
+  }
 });

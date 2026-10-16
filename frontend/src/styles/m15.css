@@ -110,8 +110,13 @@
 .adventure-dashboard .point-growth { left: 82%; top: 81%; }
 
 /* Larger and less boxed companion portrait; preserve source artwork. */
+.adventure-dashboard .adventure-hero .hero-identity-art {
+  display: flex; flex-direction: column; flex: 0 0 61%;
+  height: 61%; min-height: 0; overflow: visible;
+}
 .adventure-dashboard .adventure-hero .character-stage {
-  min-height: 0; height: 47%; border: 0; border-radius: 0;
+  flex: 1 1 auto;
+  min-height: 235px; height: auto; border: 0; border-radius: 0;
   background: radial-gradient(ellipse at 48% 38%,#527a9b 0%,#244461 47%,#122b49 83%);
   box-shadow: inset 0 -30px 30px #0d2034;
 }
@@ -128,11 +133,12 @@
   max-width: 156px; border-radius: 4px;
 }
 .adventure-dashboard .adventure-hero .hero-level {
+  flex-shrink: 0;
   margin: 7px 0 5px; padding: 4px 1px 0; border: 0;
 }
 .adventure-dashboard .adventure-hero .hero-level strong { font: bold 21px Georgia,serif; }
 .adventure-dashboard .adventure-hero .hero-level small { font-size: 9px; }
-.adventure-dashboard .adventure-hero .hero-stat-grid { gap: 2px; margin: 8px 0; }
+.adventure-dashboard .adventure-hero .hero-stat-grid { flex: 0 0 auto; gap: 2px; margin: 8px 0; }
 .adventure-dashboard .adventure-hero .hero-stat-grid>div { padding: 6px 0; }
 .adventure-dashboard .adventure-hero .hero-stat-grid svg { width: 38px; height: 38px; }
 .adventure-dashboard .adventure-hero .hero-stat-grid strong { font-size: 13px; }
@@ -190,7 +196,7 @@
   .adventure-dashboard { grid-template-columns:1fr; }
   .adventure-dashboard .adventure-map { height:520px; }
   .adventure-dashboard .adventure-hero { height:auto; min-height:0; flex-direction:row; flex-wrap:wrap; }
-  .adventure-dashboard .adventure-hero .hero-identity { width:37%; }
+  .adventure-dashboard .adventure-hero .hero-identity { width:37%; height:340px; flex:0 0 37%; }
   .adventure-dashboard .adventure-hero .hero-stat-grid { flex:1; align-self:center; min-width:255px; }
   .adventure-dashboard .quest-chain { width:100%; flex:none; }
   .adventure-dashboard .home-bottom { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -223,13 +229,15 @@
   .adventure-dashboard .landmark-emblem svg { width:17px;height:17px; }
   .adventure-dashboard .landmark-chevron { display:none; }
   .adventure-dashboard .home-bottom { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .adventure-dashboard .adventure-hero .character-stage { height:300px; }
+  .adventure-dashboard .adventure-hero .hero-identity-art { height:360px; flex:0 0 auto; }
+  .adventure-dashboard .adventure-hero .character-stage { height:auto; flex:1 1 auto; min-height:285px; }
 }
 @media (max-width: 620px) {
   .adventure-dashboard .home-bottom { grid-template-columns:minmax(0,1fr); }
   .adventure-dashboard .adventure-map .map-heading { padding:16px 14px; }
   .adventure-dashboard .map-heading h1 { font-size:25px; }
-  .adventure-dashboard .adventure-hero .character-stage { height:275px; }
+  .adventure-dashboard .adventure-hero .hero-identity-art { height:335px; }
+  .adventure-dashboard .adventure-hero .character-stage { min-height:260px; }
   .adventure-dashboard .landmark-scroll strong { font-size:10px; }
   .adventure-dashboard .map-nodes .landmark-scroll { padding-left:18px; }
 }

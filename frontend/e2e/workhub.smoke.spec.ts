@@ -533,19 +533,22 @@ test('M1.7 sidebar compass and carved active menu match reference without blocki
   await expect(active).toHaveClass(/is-active/);
   await expect(active).toHaveAttribute('aria-current','page');
   await expect(active.locator('.sidebar-link-label')).toBeVisible();
-  const material=await active.evaluate(element=>({
-    outside:getComputedStyle(element,'::before').clipPath,
-    inside:getComputedStyle(element,'::after').clipPath,
-    backdrop:getComputedStyle(element,'::before').backgroundImage,
+  const plaque=active.locator('.sidebar-active-ornament');
+  await expect(plaque).toBeVisible();
+  expect(await plaque.locator('path').count()).toBeGreaterThanOrEqual(10);
+  await expect(sidebar.locator('.sidebar-active-ornament')).toHaveCount(1);
+  const layer=await plaque.evaluate(element=>({
+    events:getComputedStyle(element).pointerEvents,
+    zIndex:getComputedStyle(element).zIndex,
   }));
-  expect(material.outside).toContain('polygon(');
-  expect(material.inside).toContain('polygon(');
-  expect(material.backdrop).toContain('linear-gradient(');
+  expect(layer.events).toBe('none');
+  expect(layer.zIndex).toBe('0');
   await page.screenshot({path:testInfo.outputPath('sidebar-brass-desktop.png'),fullPage:true});
   await sidebar.getByRole('link',{name:'工作日历'}).click();
   await expect(page).toHaveURL(/\/calendar$/);
   await expect(sidebar.getByRole('link',{name:'工作日历'})).toHaveClass(/is-active/);
   await expect(sidebar.locator('.sidebar-link.is-active')).toHaveCount(1);
+  await expect(sidebar.locator('.sidebar-active-ornament')).toHaveCount(1);
 });
 
 test('M1.7 fantasy sidebar remains usable as a mobile drawer',async ({page},testInfo)=>{
@@ -556,6 +559,7 @@ test('M1.7 fantasy sidebar remains usable as a mobile drawer',async ({page},test
   await expect(sidebar.locator('.brand-compass-svg')).toBeVisible();
   await expect(sidebar.locator('.sidebar-link')).toHaveCount(10);
   await expect(sidebar.getByRole('link',{name:'主页 · 冒险地图'})).toHaveClass(/is-active/);
+  await expect(sidebar.locator('.sidebar-active-ornament')).toHaveCount(1);
   await page.screenshot({path:testInfo.outputPath('sidebar-brass-mobile.png'),fullPage:false});
   await sidebar.getByRole('link',{name:'项目中心'}).click();
   await expect(page).toHaveURL(/\/projects$/);
